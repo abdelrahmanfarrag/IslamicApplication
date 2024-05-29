@@ -1,0 +1,23 @@
+As we are build an app with different end points that might need different APIS
+1- QURAN API
+This server will return to us all quran details in text/audio
+EndPoint:https://api.quran.com/api/v4/
+
+2-Radio
+This server will return the us stream URL to listen to islamic content
+EndPoint:https://data-rosy.vercel.app/radio.json
+
+3-Tafsir
+This server will obtain from it the tafsir for some quran content
+EndPoint:https://quranenc.com/api/v1/translation/sura/arabic_moyassar/114
+
+4-Hadith
+This server will return to us hadith content
+EndPoint:https://github.com/gadingnst/hadith-api
+//Sample response for this specific
+{"maintaner":"Sutan Gading Fadhillah Nasution <sutan.gnst@gmail.com>","source":"https://github.com/gadingnst/hadith-api","endpoints":{"list":{"pattern":"https://api.hadith.gading.dev/books","description":"Returns the list of available Hadith Books."},"hadith":{"pattern":"https://api.hadith.gading.dev/books/{name}?range={number}-{number}","example":"https://api.hadith.gading.dev/books/muslim?range=1-150","description":"Returns hadiths by range of number. (Note: For performance reasons, max accepted range: 300)"},"spesific":{"pattern":"https://api.hadith.gading.dev/books/{name}/{number}",
+"example":"https://api.hadith.gading.dev/books/bukhari/52","description":"Returns spesific hadith."}}}
+
+5-PrayTimes
+This server will return pray time for each day.
+EndPoint:https://api.aladhan.com/v1
