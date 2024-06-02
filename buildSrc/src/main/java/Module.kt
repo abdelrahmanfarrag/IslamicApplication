@@ -6,6 +6,7 @@ object Module {
     const val home_data =":feature-home:data"
     const val home_domain=":feature-home:domain"
     const val home_presentation=":feature-home:presentation"
+    const val core = ":core"
     
 //    const val onboardingDomain = ":onboarding:onboarding_domain"
 //    const val onboardingPresentation = ":onboarding:onboarding_presentation"

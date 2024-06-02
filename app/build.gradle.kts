@@ -15,7 +15,7 @@ android {
         targetSdk = ProjectConfig.targetSdk
         versionCode = ProjectConfig.versionCode
         versionName = ProjectConfig.versionName
-
+        multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -32,8 +32,9 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_19
-        targetCompatibility = JavaVersion.VERSION_19
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -69,6 +70,7 @@ dependencies {
     implementation(project(Module.home_data))
     implementation(project(Module.home_domain))
     implementation(project(Module.home_presentation))
+    implementation(project(Module.core))
 
 
     implementation(AndroidX.coreKtx)
@@ -106,4 +108,9 @@ dependencies {
     androidTestImplementation(Testing.hiltTesting)
     kaptAndroidTest(Hilt.hiltCompiler)
     androidTestImplementation(Testing.testRunner)
+    testImplementation(Testing.MOCKITO_INLINE)
+    testImplementation(Testing.MOCKITO_KOTLIN)
+    coreLibraryDesugaring (Desugar.desugarJDKLibs)
+
+
 }

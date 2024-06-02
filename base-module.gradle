@@ -24,11 +24,11 @@ android {
     compileOptions {
         coreLibraryDesugaringEnabled true
 
-        sourceCompatibility JavaVersion.VERSION_18
-        targetCompatibility JavaVersion.VERSION_18
+        sourceCompatibility JavaVersion.VERSION_19
+        targetCompatibility JavaVersion.VERSION_19
     }
     kotlinOptions {
-        jvmTarget = '18'
+        jvmTarget = '19'
     }
 }
 
@@ -55,5 +55,8 @@ dependencies {
     androidTestImplementation Testing.mockWebServer
     androidTestImplementation Testing.hiltTesting
     coreLibraryDesugaring Desugar.desugarJDKLibs
+    testImplementation Testing.MOCKITO_INLINE
+    testImplementation Testing.MOCKITO_KOTLIN
+
 
 }

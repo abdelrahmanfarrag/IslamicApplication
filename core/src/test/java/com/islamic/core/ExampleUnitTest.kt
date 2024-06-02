@@ -1,4 +1,4 @@
-package com.islamic.api
+package com.islamic.core
 
 import org.junit.Test
 

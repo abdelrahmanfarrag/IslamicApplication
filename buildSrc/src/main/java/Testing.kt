@@ -27,4 +27,10 @@ object Testing {
 
     private const val testRunnerVersion = "1.4.0"
     const val testRunner = "androidx.test:runner:$testRunnerVersion"
+
+    private const val MOCKITO_INLINE_VERSION = "2.21.0"
+    private const val MOCKITO_KOTLIN_VERSION = "4.1.0"
+    const val MOCKITO_INLINE = "org.mockito:mockito-inline:${MOCKITO_INLINE_VERSION}"
+    const val MOCKITO_KOTLIN = "org.mockito.kotlin:mockito-kotlin:${MOCKITO_KOTLIN_VERSION}"
+
 }
