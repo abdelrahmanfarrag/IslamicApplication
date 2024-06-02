@@ -1,11 +1,14 @@
 package com.islamic.di
 
+import android.content.Context
+import android.net.ConnectivityManager
 import com.islamic.api.quran.QuranAPI
 import com.islamic.di.qualifiers.QuranServer
 import com.islamic.endpoints.QuranEndPoints
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -47,5 +50,11 @@ object ApiModule {
             .client(client)
             .build()
             .create()
+    }
+
+    @Provides
+    @Singleton
+    fun providesConnectivityManager(@ApplicationContext context: Context):ConnectivityManager{
+        return context.getSystemService(ConnectivityManager::class.java)
     }
 }
