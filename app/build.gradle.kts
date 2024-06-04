@@ -70,6 +70,9 @@ dependencies {
     implementation(project(Module.home_data))
     implementation(project(Module.home_domain))
     implementation(project(Module.home_presentation))
+    implementation(project(Module.core))
+    implementation(project(Module.CORE_DATA))
+    implementation(project(Module.CORE_DOMAIN))
 
 
     implementation(AndroidX.coreKtx)
@@ -109,7 +112,7 @@ dependencies {
     androidTestImplementation(Testing.testRunner)
     testImplementation(Testing.MOCKITO_INLINE)
     testImplementation(Testing.MOCKITO_KOTLIN)
-    coreLibraryDesugaring (Desugar.desugarJDKLibs)
+    coreLibraryDesugaring(Desugar.desugarJDKLibs)
 
 
 }

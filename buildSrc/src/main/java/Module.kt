@@ -3,11 +3,13 @@ object Module {
 
     const val api = ":api"
 
-    const val home_data =":feature-home:data"
-    const val home_domain=":feature-home:domain"
-    const val home_presentation=":feature-home:presentation"
+    const val home_data = ":feature-home:data"
+    const val home_domain = ":feature-home:domain"
+    const val home_presentation = ":feature-home:presentation"
     const val core = ":core"
-    
+    const val CORE_DATA = ":core:data"
+    const val CORE_DOMAIN = ":core:domain"
+
 //    const val onboardingDomain = ":onboarding:onboarding_domain"
 //    const val onboardingPresentation = ":onboarding:onboarding_presentation"
 //

@@ -4,12 +4,10 @@ plugins {
 }
 apply(from = "$rootDir/base-module.gradle")
 android {
-    namespace = "com.islamic.home_data"
+    namespace = "com.islamic.core_data"
 }
-dependencies{
-    implementation(project(Module.home_domain))
+dependencies {
     implementation(project(Module.api))
-    implementation(project(Module.CORE_DATA))
     implementation(project(Module.CORE_DOMAIN))
 
 }

@@ -14,11 +14,11 @@ class ValidateResponse : IValidateResponse {
                 if (body != null)
                     ServerResponseState.StateSuccess(body)
                 else
-                    ServerResponseState.StateError<Any>(code) as ServerResponseState<T>
+                    ServerResponseState.StateError(code) as ServerResponseState<T>
             } else
-                ServerResponseState.StateError<Any>(code) as ServerResponseState<T>
+                ServerResponseState.StateError(code) as ServerResponseState<T>
         } catch (e: Exception) {
-            ServerResponseState.StateError<Any>(code) as ServerResponseState<T>
+            ServerResponseState.StateError(code) as ServerResponseState<T>
         }
     }
 }

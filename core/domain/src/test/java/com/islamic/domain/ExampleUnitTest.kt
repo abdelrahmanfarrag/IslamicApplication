@@ -1,4 +1,4 @@
-package com.islamic.data
+package com.islamic.domain
 
 import org.junit.Test
 
