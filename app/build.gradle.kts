@@ -70,7 +70,6 @@ dependencies {
     implementation(project(Module.home_data))
     implementation(project(Module.home_domain))
     implementation(project(Module.home_presentation))
-    implementation(project(Module.core))
 
 
     implementation(AndroidX.coreKtx)
