@@ -1,6 +1,7 @@
 package com.islamic.remotedatasource.quran
 
 import com.islamic.api.quran.QuranAPI
+import com.islamic.di.qualifiers.QuranServer
 import com.islamic.entities.quran.BaseQuranResponse
 import com.islamic.entities.quran.MetaResponse
 import com.islamic.entities.quran.Quran
@@ -14,7 +15,7 @@ import javax.inject.Inject
 class QuranRemoteDataSource @Inject constructor(
     private val iCheckNetworkAvailability: ICheckNetworkAvailability,
     private val iValidateResponse: IValidateResponse,
-    private val quranAPI: QuranAPI
+    @QuranServer private val quranAPI: QuranAPI
 ) : IQuranRemoteDataSource {
     override suspend fun getQuranAvailableTafsirTypes(): ServerResponseState<BaseQuranResponse<QuranEditionType>> {
         val isNetworkAvailable = iCheckNetworkAvailability.isNetworkAvailable()

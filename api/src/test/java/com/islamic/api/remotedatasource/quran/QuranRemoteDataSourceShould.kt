@@ -20,13 +20,9 @@ class QuranRemoteDataSourceShould {
     private val checkNetworkState = mock<ICheckNetworkAvailability>()
     private val iValidateResponse = mock<IValidateResponse>()
     private val quranAPI = mock<QuranAPI>()
-    private val responseHelper = ResponseHelper()
 
     private suspend fun initTests(isNetworkAvailable: Boolean) {
         whenever(checkNetworkState.isNetworkAvailable()).thenReturn(isNetworkAvailable)
-        whenever(iValidateResponse.validateResponse(responseHelper.successResponse(Any()))).thenReturn(
-            ServerResponseState.StateSuccess(Any())
-        )
         whenever(iValidateResponse.validateResponse(quranAPI.getQuranAvailableTafsirTypes())).thenReturn(
             ServerResponseState.StateSuccess(
                 BaseQuranResponse()

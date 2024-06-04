@@ -2,8 +2,11 @@ package com.islamic.di
 
 import android.content.Context
 import android.net.ConnectivityManager
+import com.islamic.api.pray.PrayAPI
 import com.islamic.api.quran.QuranAPI
+import com.islamic.di.qualifiers.PrayServer
 import com.islamic.di.qualifiers.QuranServer
+import com.islamic.endpoints.PrayEndPoints
 import com.islamic.endpoints.QuranEndPoints
 import dagger.Module
 import dagger.Provides
@@ -46,6 +49,18 @@ object ApiModule {
     fun providesQuranAPI(client: OkHttpClient): QuranAPI {
         return Retrofit.Builder()
             .baseUrl(QuranEndPoints.SERVER_URL)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .client(client)
+            .build()
+            .create()
+    }
+
+    @Provides
+    @PrayServer
+    @Singleton
+    fun providesPrayAPI(client: OkHttpClient):PrayAPI{
+        return Retrofit.Builder()
+            .baseUrl(PrayEndPoints.SERVER_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .client(client)
             .build()
