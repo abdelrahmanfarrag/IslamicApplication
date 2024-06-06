@@ -4,12 +4,12 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Geocoder
+import android.os.Build
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.islamic.core_domain.R
 import com.islamic.domain.ResultState
 import com.islamic.domain.TextWrapper
 import com.islamic.domain.model.Location
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CompletableDeferred
 import javax.inject.Inject
 
@@ -27,12 +27,32 @@ class GetUserLocation @Inject constructor(
             location.complete(ResultState.ResultError(TextWrapper.ResourceText(R.string.permission_not_granted)))
         else
             fusedLocationProviderClient.lastLocation.addOnSuccessListener { obtainedLoc ->
-                geocoder.getFromLocation(obtainedLoc.latitude, obtainedLoc.longitude, 1) {
-                    if (it.isEmpty())
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    geocoder.getFromLocation(obtainedLoc.latitude, obtainedLoc.longitude, 1) {
+                        if (it.isEmpty())
+                            location.complete(ResultState.ResultError(TextWrapper.ResourceText(R.string.no_location_found)))
+                        else {
+                            val firstLocation = it[0]
+                            val cityName = firstLocation.subAdminArea
+                            val countryName = firstLocation.countryName
+                            location.complete(
+                                ResultState.ResultSuccess(
+                                    Location(
+                                        cityName,
+                                        countryName
+                                    )
+                                )
+                            )
+                        }
+                    }
+                } else {
+                    val addresses =
+                        geocoder.getFromLocation(obtainedLoc.latitude, obtainedLoc.longitude, 1)
+                    if (addresses.isNullOrEmpty())
                         location.complete(ResultState.ResultError(TextWrapper.ResourceText(R.string.no_location_found)))
                     else {
-                        val firstLocation = it[0]
-                        val cityName = "zagazig"
+                        val firstLocation = addresses[0]
+                        val cityName = firstLocation.subAdminArea
                         val countryName = firstLocation.countryName
                         location.complete(
                             ResultState.ResultSuccess(
