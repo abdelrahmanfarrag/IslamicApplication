@@ -8,4 +8,5 @@ android {
 }
 dependencies {
     implementation(project(Module.CORE_DOMAIN))
+    testImplementation(project(Module.CORE_DOMAIN))
 }

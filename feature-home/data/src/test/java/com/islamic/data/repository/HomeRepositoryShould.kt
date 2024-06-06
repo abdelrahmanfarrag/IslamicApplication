@@ -35,7 +35,7 @@ class HomeRepositoryShould {
             val result =
                 initTests(ServerResponseState.NoInternetConnection as ServerResponseState<PrayResponse>)
             assertEquals(
-                ResultState.ResultError(TextWrapper.ResourceText(R.string.no_internet)),
+                ResultState.ResultError<PrayResponse>(TextWrapper.ResourceText(R.string.no_internet)),
                 result
             )
         }
@@ -51,7 +51,7 @@ class HomeRepositoryShould {
         val result =
             initTests(ServerResponseState.StateError(100) as ServerResponseState<PrayResponse>)
         assertEquals(
-            ResultState.ResultError(TextWrapper.ResourceText(R.string.something_went_wrong)),
+            ResultState.ResultError<PrayResponse>(TextWrapper.ResourceText(R.string.something_went_wrong)),
             result
         )
     }
