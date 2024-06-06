@@ -1,18 +1,18 @@
 package com.islamic.entities.pray
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class AdhanTimings(
-    @field:Json(name = "Fajr")
+    @SerializedName("Fajr")
     val fajr: String? = null,
-    @field:Json(name = "Sunrise")
+    @SerializedName("Sunrise")
     val sunrise: String? = null,
-    @field:Json(name = "Dhuhr")
+    @SerializedName("Dhuhr")
     val dhuhr: String? = null,
-    @field:Json(name = "Asr")
+    @SerializedName("Asr")
     val asr: String? = null,
-    @field:Json(name = "Maghrib")
+    @SerializedName("Maghrib")
     val maghrib: String? = null,
-    @field:Json(name = "Isha")
+    @SerializedName("Isha")
     val isha: String? = null
 )

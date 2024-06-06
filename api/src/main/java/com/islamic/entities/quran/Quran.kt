@@ -1,19 +1,19 @@
 package com.islamic.entities.quran
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class Quran(
-    @field:Json(name = "number")
+    @SerializedName("number")
     val number: Int?,
-    @field:Json(name = "name")
+    @SerializedName("name")
     val name: String?,
-    @field:Json(name = "revelationType")
+    @SerializedName("revelationType")
     val revealType: String?,
-    @field:Json(name = "numberOfAyahs")
+    @SerializedName("numberOfAyahs")
     val countOfAyahs: Int?,
-    @field:Json(name = "ayahs")
+    @SerializedName("ayahs")
     val ayahs: ArrayList<Ayah>?,
-    @field:Json(name = "edition")
+    @SerializedName("edition")
     val edition: Edition?
 
 )

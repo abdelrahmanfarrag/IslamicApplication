@@ -1,10 +1,10 @@
 package com.islamic.entities.pray
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class HijriMonth(
-    @field:Json(name = "number")
-    val number:Int?=null,
-    @field:Json(name = "ar")
-    val arabicName:String?=null
+    @SerializedName("number")
+    val number: Int? = null,
+    @SerializedName("ar")
+    val arabicName: String? = null
 )

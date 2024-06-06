@@ -2,18 +2,20 @@ package com.islamic.data.di
 
 import com.islamic.data.repository.HomeRepository
 import com.islamic.domain.repository.IHomeRepository
-import dagger.Binds
+import com.islamic.remotedatasource.pray.IPrayRemoteDataSource
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(ViewModelComponent::class)
-abstract class CoreModule {
+object DataModule {
 
-    @Binds
+    @Provides
     @ViewModelScoped
-    abstract fun bindsHomeRepository(homeRepository: HomeRepository): IHomeRepository
-
+    fun providesHomeRepository(iPrayRemoteDataSource: IPrayRemoteDataSource):IHomeRepository{
+        return HomeRepository(iPrayRemoteDataSource)
+    }
 }

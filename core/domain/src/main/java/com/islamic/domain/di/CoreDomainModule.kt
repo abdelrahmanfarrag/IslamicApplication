@@ -1,22 +1,40 @@
 package com.islamic.domain.di
 
-import com.islamic.domain.usecase.praytimes.GetPrayTimeUseCase
-import com.islamic.domain.usecase.praytimes.IGetPrayTimeUseCase
-import dagger.Binds
+import android.content.Context
+import android.location.Geocoder
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.islamic.domain.usecase.date.GetCurrentDateUseCase
+import com.islamic.domain.usecase.date.IGetCurrentDateUseCase
+import com.islamic.domain.usecase.location.GetUserLocation
+import com.islamic.domain.usecase.location.IGetUserLocation
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
+import java.time.Clock
 
 @Module
 @InstallIn(ViewModelComponent::class)
-abstract class CoreDomainModule {
+class CoreDomainModule {
 
-    companion object {
 
+    @Provides
+    @ViewModelScoped
+    fun providesGetCurrentDateUseCase(clock: Clock): IGetCurrentDateUseCase {
+        return GetCurrentDateUseCase(clock)
     }
 
-    @Binds
+    @Provides
     @ViewModelScoped
-    abstract fun bindsGetPrayTimesUseCase(getPrayTimeUseCase: GetPrayTimeUseCase): IGetPrayTimeUseCase
+    fun providesGetUserLocation(
+        fusedLocationPerClient: FusedLocationProviderClient,
+        geocoder: Geocoder,
+        @ApplicationContext context: Context
+    ): IGetUserLocation {
+        return GetUserLocation(fusedLocationPerClient, geocoder, context)
+    }
+
+
 }

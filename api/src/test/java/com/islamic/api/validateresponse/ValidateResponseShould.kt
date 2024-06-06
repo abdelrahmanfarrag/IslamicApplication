@@ -32,13 +32,13 @@ class ValidateResponseShould {
     fun `return error when response body is not null `()= runTest {
         initTests()
         val response = iValidateResponse.validateResponse(responseHelper.nullResponse())
-        assertEquals(response, ServerResponseState.StateError<Any>(200))
+        assertEquals(response, ServerResponseState.StateError(200))
     }
     @Test
     fun `return error when status code is not 200`()= runTest {
         initTests()
         val response = iValidateResponse.validateResponse(responseHelper.emptyErrorResponse(600))
-        assertEquals(response, ServerResponseState.StateError<Any>(600))
+        assertEquals(response, ServerResponseState.StateError(600))
     }
 
     @Test
@@ -47,7 +47,7 @@ class ValidateResponseShould {
         val mockedResponse = mock<Response<*>>()
         whenever(mockedResponse.isSuccessful).thenReturn(false)
         val response = iValidateResponse.validateResponse(mockedResponse)
-        assertEquals(response, ServerResponseState.StateError<Any>(mockedResponse.code()))
+        assertEquals(response, ServerResponseState.StateError(mockedResponse.code()))
     }
 
     @Test
@@ -56,6 +56,6 @@ class ValidateResponseShould {
         val mock = mock<Response<*>>()
         whenever(mock.body()).thenThrow(RuntimeException("error"))
         val response = iValidateResponse.validateResponse(mock)
-        assertEquals(response, ServerResponseState.StateError<Any>(mock.code()))
+        assertEquals(response, ServerResponseState.StateError(mock.code()))
     }
 }

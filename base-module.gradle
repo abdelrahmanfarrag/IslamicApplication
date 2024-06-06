@@ -15,6 +15,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -23,18 +24,18 @@ android {
     }
     compileOptions {
         coreLibraryDesugaringEnabled true
-
-        sourceCompatibility JavaVersion.VERSION_19
-        targetCompatibility JavaVersion.VERSION_19
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '19'
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
     kapt Hilt.hiltCompiler
     implementation Hilt.hiltAndroid
+
 
     testImplementation Testing.junit4
     testImplementation Testing.junitAndroidExt
@@ -57,6 +58,8 @@ dependencies {
     coreLibraryDesugaring Desugar.desugarJDKLibs
     testImplementation Testing.MOCKITO_INLINE
     testImplementation Testing.MOCKITO_KOTLIN
+    implementation("com.squareup:javapoet:1.13.0") // <-- added this
+
 
 
 }

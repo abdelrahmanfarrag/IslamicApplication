@@ -1,8 +1,8 @@
 package com.islamic.entities.quran
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class MetaResponse(
-    @field:Json(name = "surrahs")
+    @SerializedName("surrahs")
     val surrah:Surrah?
 )

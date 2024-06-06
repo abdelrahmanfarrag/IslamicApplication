@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("dagger.hilt.android.plugin")
-    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.kapt")
     id("org.jetbrains.kotlin.android")
 }
 
@@ -64,13 +64,15 @@ dependencies {
     implementation(Compose.viewModelCompose)
     implementation(Compose.activityCompose)
 
-    implementation(Hilt.hiltAndroid)
+    implementation(Hilt.hiltAndroid){
+        exclude(group="com.squareup", module = "javapoet")
+    }
+    implementation("com.squareup:javapoet:1.13.0")
     kapt(Hilt.hiltCompiler)
     implementation(project(Module.api))
     implementation(project(Module.home_data))
     implementation(project(Module.home_domain))
     implementation(project(Module.home_presentation))
-    implementation(project(Module.core))
     implementation(project(Module.CORE_DATA))
     implementation(project(Module.CORE_DOMAIN))
 
@@ -113,6 +115,7 @@ dependencies {
     testImplementation(Testing.MOCKITO_INLINE)
     testImplementation(Testing.MOCKITO_KOTLIN)
     coreLibraryDesugaring(Desugar.desugarJDKLibs)
-
-
+}
+kapt {
+    correctErrorTypes = true
 }

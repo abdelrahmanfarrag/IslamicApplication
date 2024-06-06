@@ -1,12 +1,12 @@
 package com.islamic.entities.quran
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class BaseQuranResponse<T>(
-    @field:Json(name="code")
+    @SerializedName("code")
     val code:Int?=null,
-    @field:Json(name="status")
+    @SerializedName("status")
     val status:Int?=null,
-    @field:Json(name="data")
+    @SerializedName("data")
     val data : ArrayList<T>?=null,
 )

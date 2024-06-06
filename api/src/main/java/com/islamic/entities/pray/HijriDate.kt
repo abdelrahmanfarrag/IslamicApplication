@@ -1,9 +1,9 @@
 package com.islamic.entities.pray
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class HijriDate(
-    @field:Json(name = "hijri")
+    @SerializedName("hijri")
     val hijri: Hijri? = null,
 ) {
 

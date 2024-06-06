@@ -1,12 +1,12 @@
 package com.islamic.entities.quran
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class SurrahReference(
-    @field:Json(name = "number")
-    val number:Int?,
-    @field:Json(name = "name")
-    val name:String?,
-    @field:Json(name = "numberOfAyahs")
-    val countOfAyahs:String?
+    @SerializedName("number")
+    val number: Int?,
+    @SerializedName("name")
+    val name: String?,
+    @SerializedName("numberOfAyahs")
+    val countOfAyahs: String?
 )

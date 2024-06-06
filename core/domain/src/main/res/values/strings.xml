@@ -2,6 +2,8 @@
 <resources>
     <string name="no_internet">There is no internet connection.</string>
     <string name="something_went_wrong">Something went wrong.</string>
+    <string name="no_location_found">No locations found.</string>
+    <string name="permission_not_granted">Location permission not granted.</string>
     <string name="fajr">Fajr</string>
     <string name="shrouk">Shrouk</string>
     <string name="dhuhr">Dhuhr</string>

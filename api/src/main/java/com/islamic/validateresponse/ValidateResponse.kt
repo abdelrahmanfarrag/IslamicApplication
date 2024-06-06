@@ -2,9 +2,10 @@ package com.islamic.validateresponse
 
 import com.islamic.validateresponse.Constants.SUCCESS_CODE
 import retrofit2.Response
+import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
-class ValidateResponse : IValidateResponse {
+class ValidateResponse @Inject constructor() : IValidateResponse {
     override fun <T> validateResponse(response: Response<T>): ServerResponseState<T> {
         val code = response.code()
         val isSuccessful = response.isSuccessful

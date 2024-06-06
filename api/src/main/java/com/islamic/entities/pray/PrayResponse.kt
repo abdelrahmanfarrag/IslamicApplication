@@ -1,12 +1,12 @@
 package com.islamic.entities.pray
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class PrayResponse(
-    @field:Json(name = "code")
+    @SerializedName("code")
     val code: Int? = null,
-    @field:Json(name = "status")
+    @SerializedName("status")
     val status: String? = null,
-    @field:Json(name = "data")
+    @SerializedName("data")
     val prayData: PrayData? = null
 )

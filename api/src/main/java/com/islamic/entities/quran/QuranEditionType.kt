@@ -1,18 +1,18 @@
 package com.islamic.entities.quran
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class QuranEditionType(
-    @field:Json(name = "identifier")
-    val id: String?=null,
-    @field:Json(name = "language")
-    val lang: String?=null,
-    @field:Json(name = "name")
-    val name: String?=null,
-    @field:Json(name = "englishName")
-    val englishName: String?=null,
-    @field:Json(name = "format")
-    val format: String?=null,
-    @field:Json(name = "type")
-    val type: String?=null,
+    @SerializedName("identifier")
+    val id: String? = null,
+    @SerializedName("language")
+    val lang: String? = null,
+    @SerializedName("name")
+    val name: String? = null,
+    @SerializedName("englishName")
+    val englishName: String? = null,
+    @SerializedName("format")
+    val format: String? = null,
+    @SerializedName("type")
+    val type: String? = null,
 )

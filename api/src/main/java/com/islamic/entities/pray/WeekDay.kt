@@ -1,8 +1,8 @@
 package com.islamic.entities.pray
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class WeekDay(
-    @field:Json(name = "ar")
+    @SerializedName("ar")
     val dayName: String? = null
 )

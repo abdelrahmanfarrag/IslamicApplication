@@ -1,14 +1,14 @@
 package com.islamic.entities.quran
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class Ayah(
-    @field:Json(name = "number")
+    @SerializedName("number")
     val number: Int?,
-    @field:Json(name = "text")
+    @SerializedName("text")
     val text: String?,
-    @field:Json(name = "juz")
+    @SerializedName("juz")
     val juz: String?,
-    @field:Json(name = "audio")
+    @SerializedName("audio")
     val audio: String?,
 )

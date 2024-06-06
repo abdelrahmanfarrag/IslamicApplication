@@ -1,10 +1,10 @@
 package com.islamic.entities.pray
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class Hijri(
-    @field:Json(name = "month")
-    val month:HijriMonth?=null,
-    @field:Json(name = "weekday")
-    val weekday:WeekDay?=null
+    @SerializedName("month")
+    val month: HijriMonth? = null,
+    @SerializedName("weekday")
+    val weekday: WeekDay? = null
 )

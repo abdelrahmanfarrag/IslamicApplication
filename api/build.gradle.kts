@@ -8,7 +8,8 @@ android {
 }
 dependencies{
     implementation(Retrofit.retrofit)
-    implementation(Retrofit.moshiConverter)
+    implementation(Retrofit.RETROFIT_CONVERTER_GSON)
     implementation(Retrofit.okHttpLoggingInterceptor)
     implementation(Retrofit.okHttp)
+
 }

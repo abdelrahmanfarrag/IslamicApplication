@@ -22,7 +22,8 @@ class GetPrayTimeUseCaseShould {
         whenever(homeIHomeRepository.getPrayTime("", "", "")).thenReturn(flow {
             emit(ResultState.ResultSuccess(Pray()))
         })
-        getPrayTimeUseCase = GetPrayTimeUseCase(homeIHomeRepository)
+        getPrayTimeUseCase =
+            GetPrayTimeUseCase(homeIHomeRepository)
         val result = getPrayTimeUseCase.getPrayTime("", "", "").first()
         assertEquals(ResultState.ResultSuccess(Pray()), result)
     }

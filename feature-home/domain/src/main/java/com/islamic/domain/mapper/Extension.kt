@@ -1,7 +1,6 @@
 package com.islamic.domain.mapper
 
 import com.islamic.domain.ResultState
-import com.islamic.domain.TextWrapper
 import com.islamic.domain.extension.convertToLocalDateTime
 import java.time.Clock
 import java.time.LocalDateTime
@@ -37,7 +36,6 @@ fun ResultState<Pray?>.mapToPrayDTO(clock: Clock = Clock.systemDefaultZone()): R
                 localDateTime.isAfter(maghrebDateTime) && localDateTime.isBefore(ishaLocalDateTime)
 
             //To set SkyState
-
             val prays = arrayListOf(
                 SinglePray.Fajr(fajirLocalDateTime, isNextFajr, result?.fajr),
                 SinglePray.Shrouk(shroukLocalDateTime, isNextShrouk, result?.sunrise),
