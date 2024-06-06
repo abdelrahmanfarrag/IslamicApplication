@@ -8,11 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.islamic.app.ui.theme.IslamicApplicationTheme
-import com.islamic.domain.usecase.home.ILoadPrayForHomeUseCase
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -22,7 +19,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             IslamicApplicationTheme {
-                val home = hiltViewModel<MainViewModel>()
                 LaunchedEffect(key1 = Unit) {
 //                    iLoadPrayForHomeUseCase.getPrayDTO().collect {
 //                        Log.d("printIt", "$it")
