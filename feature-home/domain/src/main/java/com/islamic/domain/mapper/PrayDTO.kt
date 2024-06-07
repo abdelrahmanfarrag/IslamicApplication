@@ -7,5 +7,6 @@ data class PrayDTO(
     val nextPray: SinglePray? = null,
     val day: String? = "",
     val monthName: String? = "",
-    val dayOfMonth: Int? = -1,
+    val dayOfMonth: String? = "",
+    val hijriDate:String?=""
 )

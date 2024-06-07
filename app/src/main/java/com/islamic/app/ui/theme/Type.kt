@@ -58,4 +58,9 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp
     ),
+    subtitle1 =TextStyle(
+        fontFamily = cairoFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 10.sp
+    )
 )

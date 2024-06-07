@@ -103,6 +103,7 @@ dependencies {
     implementation(Compose.navigation)
     implementation(Compose.viewModelCompose)
     implementation(Compose.activityCompose)
+    implementation(Compose.COMPOSE_RUNTIME)
 
     implementation(Hilt.hiltAndroid) {
         exclude(group = "com.squareup", module = "javapoet")

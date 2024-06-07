@@ -48,6 +48,7 @@ dependencies {
     implementation Compose.runtime
     implementation Compose.navigation
     implementation Compose.viewModelCompose
+    implementation Compose.COMPOSE_RUNTIME
     implementation Compose.activityCompose
 
     kapt Hilt.hiltCompiler

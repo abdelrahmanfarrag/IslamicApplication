@@ -4,6 +4,7 @@ import com.islamic.domain.ResultState
 import com.islamic.domain.mapper.PrayDTO
 import com.islamic.domain.mapper.mapToPrayDTO
 import com.islamic.domain.usecase.date.IGetCurrentDateUseCase
+import com.islamic.domain.usecase.hijridate.IGetHijriDate
 import com.islamic.domain.usecase.location.IGetUserLocation
 import com.islamic.domain.usecase.praytimes.IGetPrayTimeUseCase
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +17,7 @@ class LoadPrayForHomeUseCase @Inject constructor(
     private val iGetPrayTimeUseCase: IGetPrayTimeUseCase,
     private val iGetUserLocation: IGetUserLocation,
     private val iGetCurrentDateUseCase: IGetCurrentDateUseCase,
+    private val iGetHijriDate: IGetHijriDate,
     private val clock: Clock
 ) : ILoadPrayForHomeUseCase {
     override suspend fun getPrayDTO(
@@ -29,7 +31,7 @@ class LoadPrayForHomeUseCase @Inject constructor(
                 successLocation.result?.city!!,
                 successLocation.result?.country!!
             ).map {
-                it.mapToPrayDTO(clock)
+                it.mapToPrayDTO(clock, iGetHijriDate.getHijriDate())
             }
         } else {
             val errorLocation = location as ResultState.ResultError

@@ -8,6 +8,7 @@ import com.islamic.domain.mapper.PrayDTO
 import com.islamic.domain.mapper.SinglePray
 import com.islamic.domain.model.Location
 import com.islamic.domain.usecase.date.IGetCurrentDateUseCase
+import com.islamic.domain.usecase.hijridate.IGetHijriDate
 import com.islamic.domain.usecase.home.ILoadPrayForHomeUseCase
 import com.islamic.domain.usecase.home.LoadPrayForHomeUseCase
 import com.islamic.domain.usecase.location.IGetUserLocation
@@ -32,17 +33,16 @@ class LoadPrayForHomeUseCaseShould {
     private val getPrayTimeUseCase = mock<IGetPrayTimeUseCase>()
     private val getUserLocation = mock<IGetUserLocation>()
     private val getCurrentDateUseCase = mock<IGetCurrentDateUseCase>()
+    private val getIGetHijriDate = mock<IGetHijriDate>()
 
     @Test
     fun `get the same state from getPrayTime UseCase`() = runTest {
         val clock = MutableClock(Clock.systemDefaultZone())
+        whenever(getIGetHijriDate.getHijriDate()).thenReturn("date")
         whenever(getPrayTimeUseCase.getPrayTime("", "", "")).thenReturn(flow {
             emit(
                 ResultState.ResultSuccess(
                     Pray(
-                        "",
-                        1,
-                        "ss",
                         "04:08",
                         "12:54",
                         "16:30",
@@ -68,6 +68,7 @@ class LoadPrayForHomeUseCaseShould {
             getPrayTimeUseCase,
             getUserLocation,
             getCurrentDateUseCase,
+            getIGetHijriDate,
             clock
         )
         val result = iLoadPrayForHomeUseCase.getPrayDTO().first()
@@ -78,13 +79,11 @@ class LoadPrayForHomeUseCaseShould {
     fun `return the right mapper after obtain pray times`() = runTest {
         val clock = MutableClock(Clock.systemDefaultZone())
         advanceTimeBy(3.hours, clock)
+        whenever(getIGetHijriDate.getHijriDate()).thenReturn("date")
         whenever(getPrayTimeUseCase.getPrayTime("", "", "")).thenReturn(flow {
             emit(
                 ResultState.ResultSuccess(
                     Pray(
-                        "today",
-                        1,
-                        "ss",
                         "04:08",
                         "12:54",
                         "16:30",
@@ -110,12 +109,13 @@ class LoadPrayForHomeUseCaseShould {
             getPrayTimeUseCase,
             getUserLocation,
             getCurrentDateUseCase,
+            getIGetHijriDate,
             clock
         )
         val result = iLoadPrayForHomeUseCase.getPrayDTO().first()
         val resultSuccess = (result as ResultState.ResultSuccess<PrayDTO>).result
         val fajrPray = resultSuccess?.prays?.find {
-            it.prayName == TextWrapper.ResourceText(com.islamic.core_domain.R.string.fajr)
+            it.prayName == TextWrapper.ResourceText(R.string.fajr)
         }
         assertEquals(
             SinglePray.Fajr(
@@ -124,7 +124,7 @@ class LoadPrayForHomeUseCaseShould {
                 fajrPray.timeAfString
             ), fajrPray
         )
-        assertEquals(1, resultSuccess.dayOfMonth)
+        assertEquals("1", resultSuccess.dayOfMonth)
         assertEquals("today", resultSuccess.day)
         assertEquals(6, resultSuccess.prays.size)
 
@@ -154,10 +154,12 @@ class LoadPrayForHomeUseCaseShould {
         whenever(getCurrentDateUseCase.getCurrentDate()).thenReturn(
             ""
         )
+        whenever(getIGetHijriDate.getHijriDate()).thenReturn("date")
         iLoadPrayForHomeUseCase = LoadPrayForHomeUseCase(
             getPrayTimeUseCase,
             getUserLocation,
             getCurrentDateUseCase,
+            getIGetHijriDate,
             clock
         )
         val result = iLoadPrayForHomeUseCase.getPrayDTO().first()
@@ -168,14 +170,12 @@ class LoadPrayForHomeUseCaseShould {
     @Test
     fun `return error of location when location throw an error`() = runTest {
         val clock = MutableClock(Clock.systemDefaultZone())
+        whenever(getIGetHijriDate.getHijriDate()).thenReturn("date")
         advanceTimeBy(3.hours, clock)
         whenever(getPrayTimeUseCase.getPrayTime("", "", "")).thenReturn(flow {
             emit(
                 ResultState.ResultSuccess(
                     Pray(
-                        "today",
-                        1,
-                        "ss",
                         "04:08",
                         "12:54",
                         "16:30",
@@ -198,6 +198,7 @@ class LoadPrayForHomeUseCaseShould {
             getPrayTimeUseCase,
             getUserLocation,
             getCurrentDateUseCase,
+            getIGetHijriDate,
             clock
         )
         val result = iLoadPrayForHomeUseCase.getPrayDTO().first()

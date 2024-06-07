@@ -1,12 +1,13 @@
 package com.islamic.domain.mapper
 
+import android.util.Log
 import com.islamic.domain.ResultState
 import com.islamic.domain.extension.convertToLocalDateTime
 import java.time.Clock
 import java.time.LocalDateTime
 
 
-fun ResultState<Pray?>.mapToPrayDTO(clock: Clock = Clock.systemDefaultZone()): ResultState<PrayDTO> {
+fun ResultState<Pray?>.mapToPrayDTO(clock: Clock = Clock.systemDefaultZone(),hijriDate:String=""): ResultState<PrayDTO> {
     return when (this) {
         is ResultState.ResultSuccess<Pray?> -> {
             //Convert times obtained from API to localDateTime
@@ -59,9 +60,7 @@ fun ResultState<Pray?>.mapToPrayDTO(clock: Clock = Clock.systemDefaultZone()): R
                     prays,
                     skyState = skyState,
                     nextPray = nextPray,
-                    day = result?.day,
-                    monthName = result?.monthName,
-                    dayOfMonth = result?.dayOfMonth
+                    hijriDate = hijriDate
                 )
             )
         }

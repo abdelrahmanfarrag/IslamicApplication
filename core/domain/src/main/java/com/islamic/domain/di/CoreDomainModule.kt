@@ -5,6 +5,8 @@ import android.location.Geocoder
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.islamic.domain.usecase.date.GetCurrentDateUseCase
 import com.islamic.domain.usecase.date.IGetCurrentDateUseCase
+import com.islamic.domain.usecase.hijridate.GetHijriDate
+import com.islamic.domain.usecase.hijridate.IGetHijriDate
 import com.islamic.domain.usecase.location.GetUserLocation
 import com.islamic.domain.usecase.location.IGetUserLocation
 import dagger.Module
@@ -14,6 +16,7 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
 import java.time.Clock
+import java.time.chrono.HijrahDate
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -34,6 +37,12 @@ class CoreDomainModule {
         @ApplicationContext context: Context
     ): IGetUserLocation {
         return GetUserLocation(fusedLocationPerClient, geocoder, context)
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun providesGetHijriDate(): IGetHijriDate {
+        return GetHijriDate()
     }
 
 

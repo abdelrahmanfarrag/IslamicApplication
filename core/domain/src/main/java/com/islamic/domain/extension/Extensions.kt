@@ -18,3 +18,13 @@ fun String?.convertToLocalDateTime(pattern: String=Constants.HH_MM_FORMAT,clock:
     val localDateTime = LocalDateTime.parse(this, fmt)
     return localDateTime
 }
+
+fun String?.replaceEnglishNumberWithArabic():String{
+    val newValue: String = ((this + "")
+        .replace("1".toRegex(), "١").replace("2".toRegex(), "٢")
+        .replace("3".toRegex(), "٣").replace("4".toRegex(), "٤")
+        .replace("5".toRegex(), "٥").replace("6".toRegex(), "٦")
+        .replace("7".toRegex(), "٧").replace("8".toRegex(), "٨")
+        .replace("9".toRegex(), "٩").replace("0".toRegex(), "٠"))
+    return newValue
+}

@@ -4,6 +4,7 @@ import com.islamic.domain.repository.IHomeRepository
 import com.islamic.domain.usecase.home.ILoadPrayForHomeUseCase
 import com.islamic.domain.usecase.home.LoadPrayForHomeUseCase
 import com.islamic.domain.usecase.date.IGetCurrentDateUseCase
+import com.islamic.domain.usecase.hijridate.IGetHijriDate
 import com.islamic.domain.usecase.location.IGetUserLocation
 import com.islamic.domain.usecase.praytimes.GetPrayTimeUseCase
 import com.islamic.domain.usecase.praytimes.IGetPrayTimeUseCase
@@ -36,12 +37,14 @@ class HomeDomainModule {
         iGetPrayTimesUseCase: IGetPrayTimeUseCase,
         iGetUserLocationUseCase: IGetUserLocation,
         iGetCurrentDateUseCase: IGetCurrentDateUseCase,
+        iGetHijriDate: IGetHijriDate,
         clock: Clock
     ): ILoadPrayForHomeUseCase {
         return LoadPrayForHomeUseCase(
             iGetPrayTimesUseCase,
             iGetUserLocationUseCase,
             iGetCurrentDateUseCase,
+            iGetHijriDate,
             clock
         )
     }
