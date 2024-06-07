@@ -11,5 +11,7 @@ android {
 }
 dependencies {
     implementation(project(Module.home_domain))
+    implementation(project(Module.CORE_DOMAIN))
+    implementation(project(Module.CORE_PRESENTATION))
     coreLibraryDesugaring(Desugar.desugarJDKLibs)
 }

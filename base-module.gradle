@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
 
+
 android {
     compileSdk ProjectConfig.compileSdk
 
@@ -16,7 +17,11 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
 
+
     buildTypes {
+        debug {
+            enableUnitTestCoverage true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -43,7 +48,6 @@ dependencies {
     testImplementation Testing.coroutines
     testImplementation Testing.turbine
     testImplementation Testing.composeUiTest
-    testImplementation Testing.mockk
     testImplementation Testing.mockWebServer
 
     androidTestImplementation Testing.junit4
@@ -52,14 +56,12 @@ dependencies {
     androidTestImplementation Testing.coroutines
     androidTestImplementation Testing.turbine
     androidTestImplementation Testing.composeUiTest
-    androidTestImplementation Testing.mockk
     androidTestImplementation Testing.mockWebServer
     androidTestImplementation Testing.hiltTesting
     coreLibraryDesugaring Desugar.desugarJDKLibs
     testImplementation Testing.MOCKITO_INLINE
     testImplementation Testing.MOCKITO_KOTLIN
     implementation("com.squareup:javapoet:1.13.0") // <-- added this
-
 
 
 }
