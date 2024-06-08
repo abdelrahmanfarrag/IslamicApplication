@@ -2,6 +2,7 @@ package com.islamic.data.di
 
 import com.islamic.data.repository.HomeRepository
 import com.islamic.domain.repository.IHomeRepository
+import com.islamic.local.localdatasource.IPrayLocalDataSource
 import com.islamic.remotedatasource.pray.IPrayRemoteDataSource
 import dagger.Module
 import dagger.Provides
@@ -15,7 +16,10 @@ object DataModule {
 
     @Provides
     @ViewModelScoped
-    fun providesHomeRepository(iPrayRemoteDataSource: IPrayRemoteDataSource):IHomeRepository{
-        return HomeRepository(iPrayRemoteDataSource)
+    fun providesHomeRepository(
+        iPrayRemoteDataSource: IPrayRemoteDataSource,
+        iPrayLocalDataSource: IPrayLocalDataSource
+    ): IHomeRepository {
+        return HomeRepository(iPrayRemoteDataSource, iPrayLocalDataSource)
     }
 }

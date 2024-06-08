@@ -10,6 +10,7 @@ object Module {
     const val CORE_DATA = ":core:data"
     const val CORE_DOMAIN = ":core:domain"
     const val CORE_PRESENTATION = ":core:presentation"
+    const val LOCAL=":local"
 
 //    const val onboardingDomain = ":onboarding:onboarding_domain"
 //    const val onboardingPresentation = ":onboarding:onboarding_presentation"

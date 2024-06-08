@@ -9,6 +9,7 @@ android {
 dependencies{
     implementation(project(Module.home_domain))
     implementation(project(Module.api))
+    implementation(project(Module.LOCAL))
     implementation(project(Module.CORE_DATA))
     implementation(project(Module.CORE_DOMAIN))
 

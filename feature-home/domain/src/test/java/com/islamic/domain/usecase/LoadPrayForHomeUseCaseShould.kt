@@ -204,7 +204,6 @@ class LoadPrayForHomeUseCaseShould {
         val result = iLoadPrayForHomeUseCase.getPrayDTO().first()
         val resultError = (result as ResultState.ResultError<PrayDTO>).textWrapper
         assertEquals(TextWrapper.ResourceText(R.string.something_went_wrong), resultError)
-
     }
 
 }
