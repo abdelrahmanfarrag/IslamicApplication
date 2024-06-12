@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface IHomeRepository {
 
+   suspend fun clearRecords()
    suspend fun getPrayTime(data: String, city: String, country: String): Flow<ResultState<Pray?>>
 }

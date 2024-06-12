@@ -4,11 +4,17 @@ import android.content.Context
 import android.location.Geocoder
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.islamic.domain.usecase.hijridate.GetHijriDate
+import com.islamic.domain.usecase.hijridate.IGetHijriDate
+import com.islamic.domain.usecase.location.GetUserLocation
+import com.islamic.domain.usecase.location.IGetUserLocation
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
+import java.time.Clock
 import java.util.Locale
 import javax.inject.Singleton
 
@@ -30,5 +36,27 @@ object AppModule {
         @ApplicationContext context: Context
     ): Geocoder {
         return Geocoder(context, Locale.getDefault())
+    }
+
+    @Provides
+    @Singleton
+    fun providesGetUserLocation(
+        fusedLocationPerClient: FusedLocationProviderClient,
+        geocoder: Geocoder,
+        @ApplicationContext context: Context
+    ): IGetUserLocation {
+        return GetUserLocation(fusedLocationPerClient, geocoder, context)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGetHijriDate(): IGetHijriDate {
+        return GetHijriDate()
+    }
+
+    @Provides
+    @Singleton
+    fun providesClock(): Clock {
+        return Clock.systemDefaultZone()
     }
 }

@@ -7,8 +7,11 @@ object Compose {
     const val runtime = "androidx.compose.runtime:runtime:$composeVersion"
     const val compiler = "androidx.compose.compiler:compiler:$composeCompilerVersion"
 
-    private const val navigationVersion = "2.7.7"
+    private const val navigationVersion = "2.8.0-alpha08"
     const val navigation = "androidx.navigation:navigation-compose:$navigationVersion"
+
+    private const val KOTLINX_SERIALIZATION_VERSION = "1.6.2"
+    const val  KOTLINX_SERIALIZATION = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2"
 
     private const val hiltNavigationComposeVersion = "1.2.0"
     const val hiltNavigationCompose =

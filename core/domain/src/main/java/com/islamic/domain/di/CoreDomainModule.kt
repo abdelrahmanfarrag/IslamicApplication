@@ -15,35 +15,23 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.hilt.components.SingletonComponent
 import java.time.Clock
 import java.time.chrono.HijrahDate
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 class CoreDomainModule {
 
 
     @Provides
-    @ViewModelScoped
+    @Singleton
     fun providesGetCurrentDateUseCase(clock: Clock): IGetCurrentDateUseCase {
         return GetCurrentDateUseCase(clock)
     }
 
-    @Provides
-    @ViewModelScoped
-    fun providesGetUserLocation(
-        fusedLocationPerClient: FusedLocationProviderClient,
-        geocoder: Geocoder,
-        @ApplicationContext context: Context
-    ): IGetUserLocation {
-        return GetUserLocation(fusedLocationPerClient, geocoder, context)
-    }
 
-    @Provides
-    @ViewModelScoped
-    fun providesGetHijriDate(): IGetHijriDate {
-        return GetHijriDate()
-    }
 
 
 }

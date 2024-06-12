@@ -32,6 +32,7 @@
             <option value="$PROJECT_DIR$/feature-home/domain" />
             <option value="$PROJECT_DIR$/feature-home/presentation" />
             <option value="$PROJECT_DIR$/local" />
+            <option value="$PROJECT_DIR$/services" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

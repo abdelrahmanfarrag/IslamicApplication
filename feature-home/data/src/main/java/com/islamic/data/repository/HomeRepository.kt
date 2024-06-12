@@ -16,6 +16,10 @@ class HomeRepository @Inject constructor(
     private val iPrayRemoteDataSource: IPrayRemoteDataSource,
     private val iPrayLocalDataSource: IPrayLocalDataSource
 ) : IHomeRepository {
+    override suspend fun clearRecords() {
+        iPrayLocalDataSource.clearDatabase()
+    }
+
     override suspend fun getPrayTime(
         data: String,
         city: String,
@@ -24,9 +28,10 @@ class HomeRepository @Inject constructor(
         val cachedPray = iPrayLocalDataSource.getPray()
         return cachedPray.map { localSource ->
             return@map if (localSource.isEmpty()) {
-                val remoteSource = iPrayRemoteDataSource.getPrayTime(data, city, country).mapToResultState {
-                    it?.mapToPray()
-                }
+                val remoteSource =
+                    iPrayRemoteDataSource.getPrayTime(data, city, country).mapToResultState {
+                        it?.mapToPray()
+                    }
                 if (remoteSource is ResultState.ResultSuccess)
                     iPrayLocalDataSource.upsertPray(
                         remoteSource.result?.mapToCachedPray(

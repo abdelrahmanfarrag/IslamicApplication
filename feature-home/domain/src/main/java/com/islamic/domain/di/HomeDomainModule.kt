@@ -15,7 +15,7 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import java.time.Clock
 
-@Module(includes = [CoreDomainModule::class])
+@Module()
 @InstallIn(ViewModelComponent::class)
 class HomeDomainModule {
 
@@ -25,16 +25,12 @@ class HomeDomainModule {
         return GetPrayTimeUseCase(iHomeRepository)
     }
 
-    @Provides
-    @ViewModelScoped
-    fun providesClock(): Clock {
-        return Clock.systemDefaultZone()
-    }
+
 
     @Provides
     @ViewModelScoped
     fun bindsLoadPrayForHomeUseCase(
-        iGetPrayTimesUseCase: IGetPrayTimeUseCase,
+         iGetPrayTimesUseCase: IGetPrayTimeUseCase,
         iGetUserLocationUseCase: IGetUserLocation,
         iGetCurrentDateUseCase: IGetCurrentDateUseCase,
         iGetHijriDate: IGetHijriDate,
@@ -48,4 +44,6 @@ class HomeDomainModule {
             clock
         )
     }
+
+
 }

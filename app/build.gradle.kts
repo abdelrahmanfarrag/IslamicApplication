@@ -3,6 +3,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("org.jetbrains.kotlin.kapt")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.serialization") version ("1.9.23")
 }
 
 android {
@@ -74,6 +75,7 @@ dependencies {
     }
     implementation("com.squareup:javapoet:1.13.0")
     kapt(Hilt.hiltCompiler)
+    kapt("androidx.hilt:hilt-compiler:1.2.0")
     implementation(project(Module.api))
     implementation(project(Module.home_data))
     implementation(project(Module.home_domain))
@@ -81,6 +83,8 @@ dependencies {
     implementation(project(Module.CORE_DATA))
     implementation(project(Module.CORE_DOMAIN))
     implementation(project(Module.CORE_PRESENTATION))
+    implementation(project(Module.SERVICES))
+    implementation(Compose.KOTLINX_SERIALIZATION)
 
 
     implementation(AndroidX.coreKtx)
@@ -89,6 +93,8 @@ dependencies {
 
     implementation(Google.material)
 
+    implementation(WorkManager.WORK_MANAGER)
+    implementation(WorkManager.HILT_WORKER)
     implementation(Retrofit.okHttp)
     implementation(Retrofit.retrofit)
     implementation(Retrofit.okHttpLoggingInterceptor)

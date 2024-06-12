@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
-
 android {
     compileSdk ProjectConfig.compileSdk
 
@@ -50,6 +49,7 @@ dependencies {
     implementation Compose.viewModelCompose
     implementation Compose.COMPOSE_RUNTIME
     implementation Compose.activityCompose
+    implementation Compose.KOTLINX_SERIALIZATION
 
     kapt Hilt.hiltCompiler
     implementation Hilt.hiltAndroid
@@ -61,6 +61,7 @@ dependencies {
     testImplementation Testing.turbine
     testImplementation Testing.composeUiTest
     testImplementation Testing.mockWebServer
+
 
     androidTestImplementation Testing.junit4
     androidTestImplementation Testing.junitAndroidExt

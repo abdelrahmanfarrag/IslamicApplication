@@ -11,16 +11,20 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 object Module {
 
     @Provides
-    @ViewModelScoped
-    fun providesPrayRemoteDataSource(@PrayServer prayAPI: PrayAPI,
-                                     iCheckNetworkAvailability: CheckNetworkAvailability,
-                                     iValidateResponse: IValidateResponse):IPrayRemoteDataSource{
-        return PrayRemoteDataSource(prayAPI,iCheckNetworkAvailability,iValidateResponse)
+    @Singleton
+    fun providesPrayRemoteDataSource(
+        @PrayServer prayAPI: PrayAPI,
+        iCheckNetworkAvailability: CheckNetworkAvailability,
+        iValidateResponse: IValidateResponse
+    ): IPrayRemoteDataSource {
+        return PrayRemoteDataSource(prayAPI, iCheckNetworkAvailability, iValidateResponse)
     }
 }
