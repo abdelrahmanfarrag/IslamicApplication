@@ -3,17 +3,16 @@ package com.islamic.app.navigation
 import kotlinx.serialization.Serializable
 
 object Screens {
+
     @Serializable
-    object HomeScreen
-
-    object BottomNavigation {
+    sealed class BottomNavigation {
         @Serializable
-        object Home
+        data object HomeScreen : BottomNavigation()
 
         @Serializable
-        object Radio
+        data object RadioScreen : BottomNavigation()
 
         @Serializable
-        object Quran
+        data object QuranScreen : BottomNavigation()
     }
 }
