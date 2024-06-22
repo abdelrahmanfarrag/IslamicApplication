@@ -84,6 +84,8 @@ dependencies {
     implementation(project(Module.CORE_DOMAIN))
     implementation(project(Module.CORE_PRESENTATION))
     implementation(project(Module.SERVICES))
+    implementation(project(Module.FEATURE_QURAN_DATA)
+    )
     implementation(Compose.KOTLINX_SERIALIZATION)
 
 
