@@ -16,15 +16,11 @@ import androidx.compose.material.SnackbarResult.*
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -36,7 +32,6 @@ import com.islamic.presentation.HomeViewModel
 import com.islamic.presentation.content.HomeComposable
 import com.islamic.services.alarmpraytime.IAlarmPrayTime
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -59,7 +54,6 @@ class MainActivity : ComponentActivity() {
                         composable<Screens.HomeScreen> {
                             val homeViewModel = hiltViewModel<HomeViewModel>()
                             val context = LocalContext.current
-
                             val permissionLauncher =
                                 rememberLauncherForActivityResult(
                                     contract = ActivityResultContracts.RequestMultiplePermissions(),
@@ -70,51 +64,37 @@ class MainActivity : ComponentActivity() {
                                             )
                                         )
                                     })
+                            LaunchedEffect(key1 = Unit) {
+                                homeViewModel.singleEvent.collect { single ->
+                                    when (single) {
+                                        HomeContract.UIEvents.RequestLocationPermission -> homeViewModel.sendEvent(
+                                            HomeContract.HomeEvents.CheckLocationPermission(
+                                                context
+                                            )
+                                        )
 
-                            val coroutineScope = rememberCoroutineScope()
-                            val lifeCycle = LocalLifecycleOwner.current
-                            DisposableEffect(Unit) {
-                                val lifeCycleObserver = LifecycleEventObserver { _, event ->
-                                    if (event == Lifecycle.Event.ON_START) {
-                                        coroutineScope.launch {
-                                            homeViewModel.singleEvent.collect { single ->
-                                                when (single) {
-                                                    HomeContract.UIEvents.RequestLocationPermission -> homeViewModel.sendEvent(
-                                                        HomeContract.HomeEvents.CheckLocationPermission(
-                                                            context
-                                                        )
-                                                    )
+                                        HomeContract.UIEvents.LaunchRequestPermission -> {
+                                            permissionLauncher.launch(
+                                                permissionsArray()
+                                            )
+                                        }
 
-                                                    HomeContract.UIEvents.LaunchRequestPermission -> {
-                                                        permissionLauncher.launch(
-                                                            permissionsArray()
-                                                        )
-                                                    }
-
-                                                    HomeContract.UIEvents.ShowPermissionsSnackBar -> {
-                                                        val action =
-                                                            scaffoldState.snackbarHostState.showSnackbar(
-                                                                context.getString(com.islamic.core_domain.R.string.permission_not_granted),
-                                                                context.getString(com.islamic.core_domain.R.string.dismiss),
-                                                                duration = SnackbarDuration.Long
-                                                            )
-                                                        when (action) {
-                                                            ActionPerformed -> launchSettingsForApplication()
-                                                            else -> launchSettingsForApplication()
-                                                        }
-                                                    }
-                                                }
+                                        HomeContract.UIEvents.ShowPermissionsSnackBar -> {
+                                            val action =
+                                                scaffoldState.snackbarHostState.showSnackbar(
+                                                    context.getString(com.islamic.core_domain.R.string.permission_not_granted),
+                                                    context.getString(com.islamic.core_domain.R.string.dismiss),
+                                                    duration = SnackbarDuration.Long
+                                                )
+                                            when (action) {
+                                                ActionPerformed -> launchSettingsForApplication()
+                                                else -> launchSettingsForApplication()
                                             }
                                         }
                                     }
-
-                                }
-                                lifeCycle.lifecycle.addObserver(lifeCycleObserver)
-                                onDispose {
-                                    lifeCycle.lifecycle.removeObserver(lifeCycleObserver)
-
                                 }
                             }
+
                             val state = homeViewModel.state.collectAsStateWithLifecycle().value
                             HomeComposable(state = state)
                         }

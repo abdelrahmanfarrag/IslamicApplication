@@ -5,7 +5,6 @@ import com.islamic.entities.quran.MetaResponse
 import com.islamic.entities.quran.Quran
 import com.islamic.entities.quran.QuranEditionType
 import com.islamic.validateresponse.ServerResponseState
-import retrofit2.Response
 
 interface IQuranRemoteDataSource {
     suspend fun getQuranAvailableTafsirTypes(): ServerResponseState<BaseQuranResponse<QuranEditionType>>
