@@ -13,5 +13,5 @@ sealed class BottomNavigationItems(
     val icon: ImageVector,
     @StringRes val label: Int
 ) {
-    data object Home : BottomNavigationItems(Screens.BottomNavigation.Home,Icons.Default.Home, com.islamic.core_domain.R.string.home)
+   // data object Home : BottomNavigationItems(Screens.BottomNavigation.Home,Icons.Default.Home, com.islamic.core_domain.R.string.home)
 }

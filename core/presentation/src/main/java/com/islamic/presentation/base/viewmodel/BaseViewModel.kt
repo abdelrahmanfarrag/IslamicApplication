@@ -1,4 +1,4 @@
-package com.islamic.presentation.base
+package com.islamic.presentation.base.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

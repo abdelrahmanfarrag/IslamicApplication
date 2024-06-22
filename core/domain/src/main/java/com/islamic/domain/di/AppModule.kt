@@ -8,6 +8,8 @@ import com.islamic.domain.usecase.hijridate.GetHijriDate
 import com.islamic.domain.usecase.hijridate.IGetHijriDate
 import com.islamic.domain.usecase.location.GetUserLocation
 import com.islamic.domain.usecase.location.IGetUserLocation
+import com.islamic.domain.usecase.locationpermission.CheckLocationPermissionUseCase
+import com.islamic.domain.usecase.locationpermission.ICheckLocationPermissionUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,9 +45,9 @@ object AppModule {
     fun providesGetUserLocation(
         fusedLocationPerClient: FusedLocationProviderClient,
         geocoder: Geocoder,
-        @ApplicationContext context: Context
+        iCheckLocationPermissionUseCase: ICheckLocationPermissionUseCase
     ): IGetUserLocation {
-        return GetUserLocation(fusedLocationPerClient, geocoder, context)
+        return GetUserLocation(fusedLocationPerClient, geocoder, iCheckLocationPermissionUseCase)
     }
 
     @Provides
@@ -58,5 +60,11 @@ object AppModule {
     @Singleton
     fun providesClock(): Clock {
         return Clock.systemDefaultZone()
+    }
+
+    @Provides
+    @Singleton
+    fun providesCheckLocationPermissionUseCase(@ApplicationContext context: Context): ICheckLocationPermissionUseCase {
+        return CheckLocationPermissionUseCase(context)
     }
 }

@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,9 +34,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.islamic.domain.mapper.SkyState
 import com.islamic.core_domain.R
-import com.islamic.domain.extension.replaceEnglishNumberWithArabic
+import com.islamic.domain.TextWrapper
 import com.islamic.domain.mapper.SinglePray
 import com.islamic.presentation.HomeContract
+import com.islamic.presentation.base.composable.ErrorComposable
 
 
 @Composable
@@ -68,57 +70,64 @@ fun HomeComposable(
                     CircularProgressIndicator()
                 }
         }
+        Log.d("printX","${state.textWrapper} ${state.isLoading}")
         item {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .clip(shape = RoundedCornerShape(8.dp))
-                    .background(color = color)
-                    .shadow(1.dp)
+            if (state.textWrapper != null && !state.isLoading)
+                ErrorComposable(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    errorIcon = R.drawable.ic_location,
+                    errorMessage = state.textWrapper
+                )
+            else
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                        .clip(shape = RoundedCornerShape(8.dp))
+                        .background(color = color)
+                        .shadow(1.dp)
 
-            ) {
-                Column {
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .padding(top = 8.dp, start = 16.dp),
-                            text = state.prayDTO?.hijriDate ?: "NO-DATE ASSISNED",
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
-                        Image(
-                            modifier = Modifier
-                                .size(56.dp)
-                                .padding(top = 8.dp, end = 16.dp),
-                            painter = painterResource(id = R.drawable.ic_moon),
-                            contentDescription = ""
-                        )
-                    }
-                    LazyRow(
-                        state = lazyListState,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight()
-                            .padding(vertical = 8.dp)
-                    ) {
-                        items(state.prayDTO?.prays ?: arrayListOf()) { singlePray ->
-                            ItemPray(singlePray = singlePray)
+                ) {
+                    Column {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .padding(top = 8.dp, start = 16.dp),
+                                text = state.prayDTO?.hijriDate ?: "NO-DATE ASSISNED",
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                            Image(
+                                modifier = Modifier
+                                    .size(56.dp)
+                                    .padding(top = 8.dp, end = 16.dp),
+                                painter = painterResource(id = R.drawable.ic_moon),
+                                contentDescription = ""
+                            )
                         }
+                        LazyRow(
+                            state = lazyListState,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                                .padding(vertical = 8.dp)
+                        ) {
+                            items(state.prayDTO?.prays ?: arrayListOf()) { singlePray ->
+                                ItemPray(singlePray = singlePray)
+                            }
+                        }
+
                     }
+
 
                 }
-
-
-            }
         }
-
-
     }
 }
 
