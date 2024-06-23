@@ -40,6 +40,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.feature_quran.presentation.component.QuranScreen
+import com.feature_quran.presentation.viewmodel.QuranViewModel
 import com.islamic.app.bottomnavigation.BottomNavigationItems
 import com.islamic.app.navigation.Screens
 import com.islamic.app.ui.theme.IslamicApplicationTheme
@@ -188,7 +190,11 @@ class MainActivity : ComponentActivity() {
                             HomeComposable(state = state)
                         }
                         composable<Screens.BottomNavigation.QuranScreen> {
-                            Text(text = "Quran")
+                            val quranViewModel = hiltViewModel<QuranViewModel>()
+                            val state = quranViewModel.state.collectAsStateWithLifecycle().value
+                            QuranScreen(state = state) { event ->
+                                quranViewModel.sendEvent(event)
+                            }
                         }
                         composable<Screens.BottomNavigation.RadioScreen> {
                             Text(text = "Radio")

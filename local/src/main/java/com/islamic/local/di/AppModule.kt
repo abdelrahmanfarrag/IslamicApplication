@@ -24,7 +24,7 @@ abstract class AppModule {
                 context.applicationContext,
                 IslamicAppDatabase::class.java,
                 "islamic-app.db"
-            ).build()
+            ).allowMainThreadQueries().build()
         }
 
         @Provides

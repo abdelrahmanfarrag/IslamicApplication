@@ -1,10 +1,15 @@
 package com.islamic.di
 
 import com.islamic.api.pray.PrayAPI
+import com.islamic.api.quran.QuranAPI
 import com.islamic.di.qualifiers.PrayServer
+import com.islamic.di.qualifiers.QuranServer
+import com.islamic.entities.quran.Quran
 import com.islamic.remotedatasource.networkcheck.CheckNetworkAvailability
 import com.islamic.remotedatasource.pray.IPrayRemoteDataSource
 import com.islamic.remotedatasource.pray.PrayRemoteDataSource
+import com.islamic.remotedatasource.quran.IQuranRemoteDataSource
+import com.islamic.remotedatasource.quran.QuranRemoteDataSource
 import com.islamic.validateresponse.IValidateResponse
 import dagger.Module
 import dagger.Provides
@@ -26,5 +31,16 @@ object Module {
         iValidateResponse: IValidateResponse
     ): IPrayRemoteDataSource {
         return PrayRemoteDataSource(prayAPI, iCheckNetworkAvailability, iValidateResponse)
+    }
+
+    @Provides
+    @Singleton
+    fun providesQuranRemoteDataSource(
+        @QuranServer quran: QuranAPI,
+        iCheckNetworkAvailability: CheckNetworkAvailability,
+        iValidateResponse: IValidateResponse
+
+    ): IQuranRemoteDataSource {
+        return QuranRemoteDataSource(iCheckNetworkAvailability, iValidateResponse, quran)
     }
 }

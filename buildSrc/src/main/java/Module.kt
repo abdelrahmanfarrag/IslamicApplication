@@ -14,6 +14,7 @@ object Module {
     const val SERVICES = ":services"
     const val FEATURE_QURAN_DATA = ":feature-quran:data"
     const val FEATURE_QURAN_DOMAIN = ":feature-quran:domain"
+    const val FEATURE_QURAN_PRESENTATION = ":feature-quran:presentation"
 
 //    const val onboardingDomain = ":onboarding:onboarding_domain"
 //    const val onboardingPresentation = ":onboarding:onboarding_presentation"

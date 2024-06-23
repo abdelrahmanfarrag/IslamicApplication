@@ -36,6 +36,7 @@ class HomeViewModelShould {
             emit(ResultState.ResultSuccess(PrayDTO()))
         })
         homeViewModel = HomeViewModel(iPrayForHomeUseCase)
+        homeViewModel.sendEvent(HomeContract.HomeEvents.LoadHomeContent)
         advanceUntilIdle()
         assertEquals(PrayDTO(), homeViewModel.currentState.prayDTO)
     }
@@ -47,6 +48,7 @@ class HomeViewModelShould {
             emit(ResultState.ResultError(error))
         })
         homeViewModel = HomeViewModel(iPrayForHomeUseCase)
+        homeViewModel.sendEvent(HomeContract.HomeEvents.LoadHomeContent)
         advanceUntilIdle()
         assertEquals(error, homeViewModel.currentState.textWrapper)
     }
@@ -57,6 +59,8 @@ class HomeViewModelShould {
             emit(ResultState.ResultSuccess(PrayDTO()))
         })
         homeViewModel = HomeViewModel(iPrayForHomeUseCase)
+        homeViewModel.sendEvent(HomeContract.HomeEvents.LoadHomeContent)
+
         homeViewModel.state.test {
             val emission1 = awaitItem()
             assertEquals(false, emission1.isLoading)

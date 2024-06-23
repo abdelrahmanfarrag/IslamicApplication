@@ -1,7 +1,7 @@
 package com.islamic.endpoints
 
 object QuranEndPoints {
-    const val SERVER_URL = "http://api.alquran.cloud/v1/"
+    const val SERVER_URL = "https://api.alquran.cloud/v1/"
 
     const val AVAILABLE_QURAN_AUDIOS = "edition/format/audio"
     const val AVAILABLE_QURAN_TAFSIR = "edition/type/tafsir"

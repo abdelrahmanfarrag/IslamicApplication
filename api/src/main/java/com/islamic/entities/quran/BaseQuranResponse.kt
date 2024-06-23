@@ -6,7 +6,7 @@ data class BaseQuranResponse<T>(
     @SerializedName("code")
     val code: Int? = null,
     @SerializedName("status")
-    val status: Int? = null,
+    val status: String? = null,
     @SerializedName("data")
     val data: T? = null,
 )
