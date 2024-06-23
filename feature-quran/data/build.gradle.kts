@@ -8,7 +8,9 @@ android {
 }
 dependencies {
     implementation(project(Module.api))
+    implementation(Retrofit.RETROFIT_CONVERTER_GSON)
     implementation(project(Module.LOCAL))
     implementation(project(Module.CORE_DATA))
     implementation(project(Module.CORE_DOMAIN))
+    implementation(project(Module.FEATURE_QURAN_DOMAIN))
 }

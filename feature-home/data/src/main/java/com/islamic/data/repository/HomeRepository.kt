@@ -6,7 +6,7 @@ import com.islamic.data.utils.mapToResultState
 import com.islamic.domain.ResultState
 import com.islamic.domain.mapper.Pray
 import com.islamic.domain.repository.IHomeRepository
-import com.islamic.local.localdatasource.IPrayLocalDataSource
+import com.islamic.local.localdatasource.pray.IPrayLocalDataSource
 import com.islamic.remotedatasource.pray.IPrayRemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

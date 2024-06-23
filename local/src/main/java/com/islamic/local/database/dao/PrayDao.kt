@@ -1,4 +1,4 @@
-package com.islamic.local.database
+package com.islamic.local.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query

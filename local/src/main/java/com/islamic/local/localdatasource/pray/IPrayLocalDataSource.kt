@@ -1,4 +1,4 @@
-package com.islamic.local.localdatasource
+package com.islamic.local.localdatasource.pray
 
 import com.islamic.local.entities.CachedPray
 import kotlinx.coroutines.flow.Flow

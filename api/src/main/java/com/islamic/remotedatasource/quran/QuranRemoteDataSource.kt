@@ -17,13 +17,13 @@ class QuranRemoteDataSource @Inject constructor(
     private val iValidateResponse: IValidateResponse,
     @QuranServer private val quranAPI: QuranAPI
 ) : IQuranRemoteDataSource {
-    override suspend fun getQuranAvailableTafsirTypes(): ServerResponseState<BaseQuranResponse<QuranEditionType>> {
+    override suspend fun getQuranAvailableTafsirTypes(): ServerResponseState<BaseQuranResponse<List<QuranEditionType>>> {
         val isNetworkAvailable = iCheckNetworkAvailability.isNetworkAvailable()
         return iValidateResponse.validateResponse(quranAPI.getQuranAvailableTafsirTypes())
             .mapBasedOnNetworkState(isNetworkAvailable)
     }
 
-    override suspend fun getQuranAvailableSheikhAudios(): ServerResponseState<BaseQuranResponse<QuranEditionType>> {
+    override suspend fun getQuranAvailableSheikhAudios(): ServerResponseState<BaseQuranResponse<List<QuranEditionType>>> {
         val isNetworkAvailable = iCheckNetworkAvailability.isNetworkAvailable()
         return iValidateResponse.validateResponse(quranAPI.getQuranAvailableSheikhAudios())
             .mapBasedOnNetworkState(isNetworkAvailable)

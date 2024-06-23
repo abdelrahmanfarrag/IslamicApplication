@@ -7,7 +7,7 @@ import com.islamic.domain.mapper.Pray
 import com.islamic.domain.repository.IHomeRepository
 import com.islamic.entities.pray.PrayResponse
 import com.islamic.local.entities.CachedPray
-import com.islamic.local.localdatasource.IPrayLocalDataSource
+import com.islamic.local.localdatasource.pray.IPrayLocalDataSource
 import com.islamic.remotedatasource.pray.IPrayRemoteDataSource
 import com.islamic.validateresponse.ServerResponseState
 import junit.framework.TestCase.assertEquals

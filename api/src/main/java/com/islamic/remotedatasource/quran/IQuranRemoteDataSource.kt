@@ -7,9 +7,9 @@ import com.islamic.entities.quran.QuranEditionType
 import com.islamic.validateresponse.ServerResponseState
 
 interface IQuranRemoteDataSource {
-    suspend fun getQuranAvailableTafsirTypes(): ServerResponseState<BaseQuranResponse<QuranEditionType>>
+    suspend fun getQuranAvailableTafsirTypes(): ServerResponseState<BaseQuranResponse<List<QuranEditionType>>>
 
-    suspend fun getQuranAvailableSheikhAudios(): ServerResponseState<BaseQuranResponse<QuranEditionType>>
+    suspend fun getQuranAvailableSheikhAudios(): ServerResponseState<BaseQuranResponse<List<QuranEditionType>>>
 
     suspend fun getQuranData(
         surrahNumber: Int,

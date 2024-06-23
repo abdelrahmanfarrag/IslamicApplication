@@ -3,7 +3,8 @@ package com.islamic.local.di
 import android.content.Context
 import androidx.room.Room
 import com.islamic.local.database.IslamicAppDatabase
-import com.islamic.local.database.PrayDao
+import com.islamic.local.database.dao.PrayDao
+import com.islamic.local.database.dao.QuranDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,6 +31,12 @@ abstract class AppModule {
         @Singleton
         fun providesPrayDao(islamicAppDatabase: IslamicAppDatabase): PrayDao {
             return islamicAppDatabase.prayDao
+        }
+
+        @Provides
+        @Singleton
+        fun providesQuranDao(islamicAppDatabase: IslamicAppDatabase): QuranDao {
+            return islamicAppDatabase.quranDao
         }
     }
 }

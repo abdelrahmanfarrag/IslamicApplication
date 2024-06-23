@@ -1,6 +1,6 @@
-package com.islamic.local.localdatasource
+package com.islamic.local.localdatasource.pray
 
-import com.islamic.local.database.PrayDao
+import com.islamic.local.database.dao.PrayDao
 import com.islamic.local.entities.CachedPray
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

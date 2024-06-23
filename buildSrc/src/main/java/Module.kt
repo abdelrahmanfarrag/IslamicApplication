@@ -13,6 +13,7 @@ object Module {
     const val LOCAL = ":local"
     const val SERVICES = ":services"
     const val FEATURE_QURAN_DATA = ":feature-quran:data"
+    const val FEATURE_QURAN_DOMAIN = ":feature-quran:domain"
 
 //    const val onboardingDomain = ":onboarding:onboarding_domain"
 //    const val onboardingPresentation = ":onboarding:onboarding_presentation"

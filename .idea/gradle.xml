@@ -33,6 +33,7 @@
             <option value="$PROJECT_DIR$/feature-home/presentation" />
             <option value="$PROJECT_DIR$/feature-quran" />
             <option value="$PROJECT_DIR$/feature-quran/data" />
+            <option value="$PROJECT_DIR$/feature-quran/domain" />
             <option value="$PROJECT_DIR$/local" />
             <option value="$PROJECT_DIR$/services" />
           </set>

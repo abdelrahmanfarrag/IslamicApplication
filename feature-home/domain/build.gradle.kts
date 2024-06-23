@@ -9,5 +9,4 @@ android {
 dependencies {
     implementation(project(Module.CORE_DOMAIN))
     implementation (Google.LOCATION_SERVICES)
-    testImplementation(project(Module.CORE_DOMAIN))
 }

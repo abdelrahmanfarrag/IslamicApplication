@@ -11,17 +11,17 @@ import retrofit2.http.Path
 
 interface QuranAPI {
     @GET(QuranEndPoints.AVAILABLE_QURAN_TAFSIR)
-    suspend fun getQuranAvailableTafsirTypes(): Response<BaseQuranResponse<QuranEditionType>>
+    suspend fun getQuranAvailableTafsirTypes(): Response<BaseQuranResponse<List<QuranEditionType>>>
 
     @GET(QuranEndPoints.AVAILABLE_QURAN_AUDIOS)
-    suspend fun getQuranAvailableSheikhAudios(): Response<BaseQuranResponse<QuranEditionType>>
+    suspend fun getQuranAvailableSheikhAudios(): Response<BaseQuranResponse<List<QuranEditionType>>>
 
     @GET(QuranEndPoints.QURAN_DATA)
     suspend fun getQuranData(
         @Path(QuranEndPoints.SURAH_NUMBER) number: Int,
         @Path(QuranEndPoints.QURAN_DATA_PATH) pathData: String
-    ) : Response<BaseQuranResponse<Quran>>
+    ): Response<BaseQuranResponse<Quran>>
 
     @GET(QuranEndPoints.QURAN_META)
-    suspend fun getQuranMeta():Response<BaseQuranResponse<MetaResponse>>
+    suspend fun getQuranMeta(): Response<BaseQuranResponse<MetaResponse>>
 }

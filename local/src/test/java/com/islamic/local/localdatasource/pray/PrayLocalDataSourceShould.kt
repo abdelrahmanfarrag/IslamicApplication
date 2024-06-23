@@ -1,8 +1,6 @@
 package com.islamic.local.localdatasource.pray
 
 import com.islamic.local.entities.CachedPray
-import com.islamic.local.localdatasource.IPrayLocalDataSource
-import com.islamic.local.localdatasource.PrayLocalDataSource
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
