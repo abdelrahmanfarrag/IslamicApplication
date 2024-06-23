@@ -6,9 +6,12 @@ import com.example.domain.entities.QuranSheikhAudio
 import com.example.domain.entities.QuranTafsir
 import com.example.domain.entities.SingleSurrah
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.islamic.entities.quran.MetaResponse
 import com.islamic.entities.quran.QuranEditionType
 import com.islamic.local.entities.LocalQuran
+import java.lang.reflect.Type
 
 fun QuranEditionType.mapToQuranTafsir(): QuranTafsir {
     return QuranTafsir(
@@ -28,6 +31,11 @@ fun QuranEditionType.mapToQuranSheikhAudio(): QuranSheikhAudio {
     )
 }
 
+inline fun <reified T> parseArray(json: String, typeToken: Type): T {
+    val gson = GsonBuilder().create()
+    return gson.fromJson<T>(json, typeToken)
+}
+
 fun MetaResponse.mapToQuranMeta(): QuranMeta {
     return QuranMeta(
         count = this.surrah?.count,
@@ -42,6 +50,7 @@ fun MetaResponse.mapToQuranMeta(): QuranMeta {
 }
 
 fun QuranDTO.mapToLocalQuran(gson: Gson): LocalQuran {
+
     return LocalQuran(
         quranSheikhGson = gson.toJson(this.quranSheikhAudios, List::class.java),
         quranMetaGson = gson.toJson(this.quranMeta, QuranMeta::class.java),
@@ -50,16 +59,19 @@ fun QuranDTO.mapToLocalQuran(gson: Gson): LocalQuran {
 }
 
 fun LocalQuran.mapToQuranDTO(gson: Gson): QuranDTO {
+    val type = object : TypeToken<List<QuranSheikhAudio>>() {}.type
+    val result: List<QuranSheikhAudio> =
+        parseArray<List<QuranSheikhAudio>>(json = this.quranSheikhGson ?: "", typeToken = type)
+    val quranTafsirType = object : TypeToken<List<QuranTafsir>>() {}.type
+    val quranTafsirResult: List<QuranTafsir> =
+        parseArray<List<QuranTafsir>>(
+            json = this.quranTafsirGson ?: "-",
+            typeToken = quranTafsirType
+        )
     return QuranDTO(
-        quranSheikhAudios = gson.fromJson<ArrayList<QuranSheikhAudio>>(
-            this.quranSheikhGson,
-            ArrayList::class.java
-        ), quranMeta = gson.fromJson(
+        quranSheikhAudios = result, quranMeta = gson.fromJson(
             this.quranMetaGson,
             QuranMeta::class.java
-        ), quranTafsir = gson.fromJson<ArrayList<QuranTafsir>>(
-            this.quranTafsirGson,
-            ArrayList::class.java
-        )
+        ), quranTafsir = quranTafsirResult
     )
 }
