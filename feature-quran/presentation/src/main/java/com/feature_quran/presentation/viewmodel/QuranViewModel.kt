@@ -24,7 +24,76 @@ class QuranViewModel @Inject constructor(
 
     override fun onEvent(event: Event) {
         when (event) {
-            is QuranContract.QuranEvents.PageOpened -> loadQuranInitialData()
+            is QuranContract.QuranEvents.OnSurrahChose -> onSurrahChose(event.surrahNumber)
+            is QuranContract.QuranEvents.OnTafsirSelected -> onTafsirSelect(event.tafsirId)
+            is QuranContract.QuranEvents.OnAudioSelected -> onAudioSelected(event.audioId)
+            is QuranContract.QuranEvents.ChangeBottomSheetState -> setState {
+                copy(
+                    shouldShowModalBottomSheet = event.isVisible
+                )
+            }
+
+            QuranContract.QuranEvents.PageOpened -> loadQuranInitialData()
+            QuranContract.QuranEvents.OnContinueClick -> {
+                sendSingleUIEvent {
+                    QuranContract.QuranUIEvents.NavigateToSurrahPage(
+                        audioId = currentState.sheikhId,
+                        tafsirId = currentState.tafsirId
+                    )
+                }
+            }
+
+        }
+    }
+
+    private fun onAudioSelected(audioId: String?) {
+        audioId?.let { id ->
+            val updateTafsir = currentState.quranDto?.quranSheikhAudios?.map {
+                return@map it.copy(
+                    isSelected = id == it.id
+                )
+            }
+            setState {
+                copy(
+                    quranDto = currentState.quranDto?.copy(
+                        quranSheikhAudios = updateTafsir
+                    ),
+                    sheikhId = id
+                )
+            }
+        }
+
+    }
+
+    private fun onTafsirSelect(tafsirId: String?) {
+        tafsirId?.let { id ->
+            val updateTafsir = currentState.quranDto?.quranTafsir?.map {
+                return@map it.copy(
+                    isSelected = id == it.id
+                )
+
+            }
+            setState {
+                copy(
+                    quranDto = currentState.quranDto?.copy(
+                        quranTafsir = updateTafsir
+                    ),
+                    tafsirId = tafsirId
+                )
+            }
+        }
+
+    }
+
+    private fun onSurrahChose(surrahNumber: Int?) {
+        if (surrahNumber != null) {
+            setState {
+                copy(
+                    surrahNumber = surrahNumber,
+                    shouldShowModalBottomSheet = true
+                )
+            }
+
         }
     }
 

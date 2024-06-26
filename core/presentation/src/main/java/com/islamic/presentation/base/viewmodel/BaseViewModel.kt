@@ -6,6 +6,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
@@ -18,7 +19,7 @@ abstract class BaseViewModel<STATE : State, EVENT : Event, SINGLE_UI_EVENT : Sin
     private val initialState by lazy { createInitialState() }
 
     private val _state: MutableStateFlow<STATE> = MutableStateFlow(initialState)
-    val state = _state
+    val state :StateFlow<STATE> = _state
 
     private val _event: MutableSharedFlow<EVENT> = MutableSharedFlow()
     val event = _event

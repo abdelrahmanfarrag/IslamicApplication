@@ -4,5 +4,6 @@ data class QuranTafsir(
     val name: String ?= "",
     val id: String ?= "",
     val type: String ?= "",
-    val language: String ?= ""
+    val language: String ?= "",
+    val isSelected:Boolean = false
 )

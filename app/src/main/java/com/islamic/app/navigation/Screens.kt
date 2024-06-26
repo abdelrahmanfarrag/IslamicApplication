@@ -15,4 +15,10 @@ object Screens {
         @Serializable
         data object QuranScreen : BottomNavigation()
     }
+
+    @Serializable
+    data class SurrahData(
+        val audioId: String? = null,
+        val tafsirId: String? = null
+    )
 }

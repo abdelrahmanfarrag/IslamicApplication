@@ -24,7 +24,8 @@ abstract class AppModule {
                 context.applicationContext,
                 IslamicAppDatabase::class.java,
                 "islamic-app.db"
-            ).allowMainThreadQueries().build()
+            ).allowMainThreadQueries().fallbackToDestructiveMigration()
+                .build()
         }
 
         @Provides

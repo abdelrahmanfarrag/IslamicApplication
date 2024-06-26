@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -18,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
+import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarResult.*
@@ -41,6 +43,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.feature_quran.presentation.component.QuranScreen
+import com.feature_quran.presentation.viewmodel.QuranContract
 import com.feature_quran.presentation.viewmodel.QuranViewModel
 import com.islamic.app.bottomnavigation.BottomNavigationItems
 import com.islamic.app.navigation.Screens
@@ -187,17 +190,31 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                             val state = homeViewModel.state.collectAsStateWithLifecycle().value
+
                             HomeComposable(state = state)
                         }
                         composable<Screens.BottomNavigation.QuranScreen> {
                             val quranViewModel = hiltViewModel<QuranViewModel>()
                             val state = quranViewModel.state.collectAsStateWithLifecycle().value
+                            LaunchedEffect(key1 = Unit) {
+                                quranViewModel.singleEvent.collect { uiEvents ->
+                                    when (uiEvents) {
+                                        is QuranContract.QuranUIEvents.NavigateToSurrahPage -> {
+
+                                        }
+                                    }
+
+                                }
+                            }
                             QuranScreen(state = state) { event ->
                                 quranViewModel.sendEvent(event)
                             }
                         }
                         composable<Screens.BottomNavigation.RadioScreen> {
                             Text(text = "Radio")
+                        }
+                        composable<Screens.SurrahData> {
+                            Text(text = "Navigate to data")
                         }
 
                     }

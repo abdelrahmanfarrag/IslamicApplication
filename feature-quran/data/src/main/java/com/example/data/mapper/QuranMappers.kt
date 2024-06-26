@@ -1,5 +1,6 @@
 package com.example.data.mapper
 
+import android.util.Log
 import com.example.domain.entities.QuranDTO
 import com.example.domain.entities.QuranMeta
 import com.example.domain.entities.QuranSheikhAudio
@@ -50,7 +51,6 @@ fun MetaResponse.mapToQuranMeta(): QuranMeta {
 }
 
 fun QuranDTO.mapToLocalQuran(gson: Gson): LocalQuran {
-
     return LocalQuran(
         quranSheikhGson = gson.toJson(this.quranSheikhAudios, List::class.java),
         quranMetaGson = gson.toJson(this.quranMeta, QuranMeta::class.java),
@@ -68,10 +68,14 @@ fun LocalQuran.mapToQuranDTO(gson: Gson): QuranDTO {
             json = this.quranTafsirGson ?: "-",
             typeToken = quranTafsirType
         )
+
+    val quranMetaType = object : TypeToken<QuranMeta>() {}.type
+    val quranMetaResult: QuranMeta =
+        parseArray<QuranMeta>(
+            json = this.quranMetaGson ?: "-",
+            typeToken = quranMetaType
+        )
     return QuranDTO(
-        quranSheikhAudios = result, quranMeta = gson.fromJson(
-            this.quranMetaGson,
-            QuranMeta::class.java
-        ), quranTafsir = quranTafsirResult
+        quranSheikhAudios = result, quranMeta = quranMetaResult, quranTafsir = quranTafsirResult
     )
 }
