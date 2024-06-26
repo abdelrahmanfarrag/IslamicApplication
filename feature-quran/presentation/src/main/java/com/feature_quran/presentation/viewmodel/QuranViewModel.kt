@@ -6,6 +6,7 @@ import com.islamic.domain.ResultState
 import com.islamic.presentation.base.viewmodel.BaseViewModel
 import com.islamic.presentation.base.viewmodel.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -103,7 +104,7 @@ class QuranViewModel @Inject constructor(
                 isLoading = true
             )
         }
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             iLoadQuranInitialDataUseCase().collect { result ->
                 if (result is ResultState.ResultSuccess) {
                     setState {
@@ -120,7 +121,6 @@ class QuranViewModel @Inject constructor(
                         )
                     }
                 }
-
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.islamic.app.viewmodel
 
+import android.util.Log
 import com.islamic.app.bottomnavigation.BottomNavigationItems
 import com.islamic.presentation.base.viewmodel.BaseViewModel
 import com.islamic.presentation.base.viewmodel.Event
@@ -9,11 +10,13 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor() :
     BaseViewModel<MainState, MainEvents, MainSingleUIEvent>() {
+
     override fun createInitialState(): MainState {
         return MainState(
             arrayListOf(
                 BottomNavigationItems.Home, BottomNavigationItems.Quran, BottomNavigationItems.Radio
-            )
+            ),
+            mainRoute = BottomNavigationItems.Home.route
         )
     }
 
@@ -30,6 +33,19 @@ class MainViewModel @Inject constructor() :
                         MainSingleUIEvent.OnRouteChange(event.route)
                     }
                 }
+            }
+
+            is MainEvents.ShouldShowBottomNavigation -> {
+                event.currentRoute?.let {
+                    val shouldShowBottomNav = it == currentState.mainRoute.javaClass.canonicalName
+                    setState {
+                        copy(
+                            shouldShow = shouldShowBottomNav
+                        )
+                    }
+                }
+
+
             }
         }
 

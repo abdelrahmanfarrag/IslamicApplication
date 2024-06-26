@@ -6,5 +6,6 @@ import com.islamic.presentation.base.viewmodel.State
 
 data class MainState(
     val bottomNavItems: ArrayList<BottomNavigationItems> = arrayListOf(),
-    val mainRoute: Screens.BottomNavigation = BottomNavigationItems.Home.route
+    val mainRoute: Screens.BottomNavigation = BottomNavigationItems.Home.route,
+    val shouldShow: Boolean = true
 ) : State

@@ -11,6 +11,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -19,7 +20,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
-import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarResult.*
@@ -42,6 +42,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.feature_quran.presentation.component.QuranScreen
 import com.feature_quran.presentation.viewmodel.QuranContract
 import com.feature_quran.presentation.viewmodel.QuranViewModel
@@ -74,6 +75,7 @@ class MainActivity : ComponentActivity() {
         bottomBarItems: ArrayList<BottomNavigationItems> = arrayListOf(),
         onEvent: (MainEvents) -> Unit = {}
     ) {
+
         LaunchedEffect(key1 = Unit) {
             singleEvents.collect { event ->
                 when (event) {
@@ -86,41 +88,42 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        BottomNavigation(
-            modifier = Modifier
-                .padding(16.dp)
-                .padding(PaddingValues(16.dp))
-                .clip(RoundedCornerShape(8.dp))
-        ) {
-            val navBackStackEntry by navHostController.currentBackStackEntryAsState()
-            val currentRoute = navBackStackEntry?.destination?.route
-            val context = LocalContext.current
-            bottomBarItems.forEach { item ->
-                val size = animateIntAsState(
-                    targetValue = if (item.route == state.mainRoute) 32 else 24, label = "label"
-                ).value
-                BottomNavigationItem(selected = currentRoute == item.route.javaClass.simpleName,
-                    onClick = {
-                        onEvent.invoke(MainEvents.OnRouteUpdate(item.route))
-                        //   homeViewModel.sendEvent(MainEvents.OnRouteUpdate(item.route))
-                    },
-                    icon = {
-                        Icon(
-                            painterResource(id = item.res),
-                            modifier = Modifier.size(size.dp),
-                            contentDescription = null,
-                            tint = if (currentRoute == item.route.javaClass.canonicalName) Color.White else Color.Black
-                        )
-                    },
-                    label = {
-                        Text(
-                            text = context.getString(item.label),
-                            color = if (currentRoute == item.route.javaClass.canonicalName) Color.White else Color.Black
-                        )
-                    })
+        AnimatedVisibility(visible = state.shouldShow) {
+            BottomNavigation(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .padding(PaddingValues(16.dp))
+                    .clip(RoundedCornerShape(8.dp))
+            ) {
+                val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+                val currentRoute = navBackStackEntry?.destination?.route
+                val context = LocalContext.current
+                bottomBarItems.forEach { item ->
+                    val size = animateIntAsState(
+                        targetValue = if (item.route == state.mainRoute) 32 else 24, label = "label"
+                    ).value
+                    BottomNavigationItem(selected = currentRoute == item.route.javaClass.simpleName,
+                        onClick = {
+                            onEvent.invoke(MainEvents.OnRouteUpdate(item.route))
+                        },
+                        icon = {
+                            Icon(
+                                painterResource(id = item.res),
+                                modifier = Modifier.size(size.dp),
+                                contentDescription = null,
+                                tint = if (currentRoute == item.route.javaClass.canonicalName) Color.White else Color.Black
+                            )
+                        },
+                        label = {
+                            Text(
+                                text = context.getString(item.label),
+                                color = if (currentRoute == item.route.javaClass.canonicalName) Color.White else Color.Black
+                            )
+                        })
+                }
             }
-
         }
+
 
     }
 
@@ -132,6 +135,11 @@ class MainActivity : ComponentActivity() {
             IslamicApplicationTheme {
                 val scaffoldState = rememberScaffoldState()
                 val navHostController = rememberNavController()
+
+                val currentDestinationState by navHostController.currentBackStackEntryAsState()
+                LaunchedEffect(key1 = currentDestinationState) {
+                    mainViewModel.sendEvent(MainEvents.ShouldShowBottomNavigation(navHostController.currentDestination?.route))
+                }
                 Scaffold(scaffoldState = scaffoldState, bottomBar = {
                     BottomNavigationSetup(
                         navHostController = navHostController,
@@ -200,7 +208,12 @@ class MainActivity : ComponentActivity() {
                                 quranViewModel.singleEvent.collect { uiEvents ->
                                     when (uiEvents) {
                                         is QuranContract.QuranUIEvents.NavigateToSurrahPage -> {
-
+                                            navHostController.navigate(
+                                                Screens.SurrahScreen(
+                                                    uiEvents.audioId,
+                                                    uiEvents.tafsirId
+                                                )
+                                            )
                                         }
                                     }
 
@@ -213,8 +226,9 @@ class MainActivity : ComponentActivity() {
                         composable<Screens.BottomNavigation.RadioScreen> {
                             Text(text = "Radio")
                         }
-                        composable<Screens.SurrahData> {
-                            Text(text = "Navigate to data")
+                        composable<Screens.SurrahScreen> {
+                            val args = it.toRoute<Screens.SurrahScreen>()
+                            Text(text = "Navigate to data $args")
                         }
 
                     }
@@ -241,22 +255,6 @@ class MainActivity : ComponentActivity() {
         else arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
         )
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!", modifier = modifier
-    )
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    IslamicApplicationTheme {
-        Greeting("Android")
     }
 }
 
