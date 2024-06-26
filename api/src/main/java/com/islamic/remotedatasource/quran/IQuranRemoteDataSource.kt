@@ -14,7 +14,7 @@ interface IQuranRemoteDataSource {
     suspend fun getQuranData(
         surrahNumber: Int,
         pathData: String
-    ): ServerResponseState<BaseQuranResponse<Quran>>
+    ): ServerResponseState<BaseQuranResponse<ArrayList<Quran>>>
 
     suspend fun getQuranMeta():ServerResponseState<BaseQuranResponse<MetaResponse>>
 }

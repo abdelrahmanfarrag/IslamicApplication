@@ -35,6 +35,10 @@
             <option value="$PROJECT_DIR$/feature-quran/data" />
             <option value="$PROJECT_DIR$/feature-quran/domain" />
             <option value="$PROJECT_DIR$/feature-quran/presentation" />
+            <option value="$PROJECT_DIR$/feature-surrah" />
+            <option value="$PROJECT_DIR$/feature-surrah/data" />
+            <option value="$PROJECT_DIR$/feature-surrah/domain" />
+            <option value="$PROJECT_DIR$/feature-surrah/presentation" />
             <option value="$PROJECT_DIR$/local" />
             <option value="$PROJECT_DIR$/services" />
           </set>

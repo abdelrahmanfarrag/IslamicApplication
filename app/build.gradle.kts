@@ -87,6 +87,10 @@ dependencies {
     implementation(project(Module.FEATURE_QURAN_DATA))
     implementation(project(Module.FEATURE_QURAN_DOMAIN))
     implementation(project(Module.FEATURE_QURAN_PRESENTATION))
+    implementation(project(Module.FEATURE_SURRAH_DATA))
+    implementation(project(Module.FEATURE_SURRAH_DOMAIN))
+    implementation(project(Module.FEATURE_SURRAH_PRESENTATION))
+
     implementation(Compose.KOTLINX_SERIALIZATION)
 
 

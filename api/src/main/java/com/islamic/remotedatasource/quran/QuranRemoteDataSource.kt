@@ -32,7 +32,7 @@ class QuranRemoteDataSource @Inject constructor(
     override suspend fun getQuranData(
         surrahNumber: Int,
         pathData: String
-    ): ServerResponseState<BaseQuranResponse<Quran>> {
+    ): ServerResponseState<BaseQuranResponse<ArrayList<Quran>>> {
         val isNetworkAvailable = iCheckNetworkAvailability.isNetworkAvailable()
         return iValidateResponse.validateResponse(quranAPI.getQuranData(surrahNumber, pathData))
             .mapBasedOnNetworkState(isNetworkAvailable)

@@ -15,5 +15,4 @@ data class Quran(
     val ayahs: ArrayList<Ayah>?,
     @SerializedName("edition")
     val edition: Edition?
-
 )

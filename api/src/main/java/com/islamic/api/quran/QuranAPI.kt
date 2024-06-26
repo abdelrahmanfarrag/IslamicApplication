@@ -20,7 +20,7 @@ interface QuranAPI {
     suspend fun getQuranData(
         @Path(QuranEndPoints.SURAH_NUMBER) number: Int,
         @Path(QuranEndPoints.QURAN_DATA_PATH) pathData: String
-    ): Response<BaseQuranResponse<Quran>>
+    ): Response<BaseQuranResponse<ArrayList<Quran>>>
 
     @GET(QuranEndPoints.QURAN_META)
     suspend fun getQuranMeta(): Response<BaseQuranResponse<MetaResponse>>
