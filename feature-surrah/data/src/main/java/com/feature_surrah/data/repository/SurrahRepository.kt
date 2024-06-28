@@ -13,16 +13,16 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
+@Suppress("UNCHECKED_CAST")
 class SurrahRepository @Inject constructor(
     private val iQuranRemoteDataSource: IQuranRemoteDataSource
 ) : ISurrahRepository {
     override suspend fun getSurrah(
         number: Int,
         selections: ArrayList<String>
-    ): Flow<ResultState<out Surrah?>> {
+    ): Flow<ResultState<Surrah>> {
         val selectionPath = createSelectionsPath(selections)
         val result = iQuranRemoteDataSource.getQuranData(1, selectionPath).mapToResultState {
-            val surrah = it?.data?.mapToSurrah()
             return@mapToResultState it?.data?.mapToSurrah()
         }
         val surrahFlow = flow { emit(result) }
@@ -35,7 +35,7 @@ class SurrahRepository @Inject constructor(
                 } else
                     it
             }
-        return surrahFlow
+        return surrahFlow as Flow<ResultState<Surrah>>
     }
 
     private fun createSelectionsPath(selections: ArrayList<String>): String {

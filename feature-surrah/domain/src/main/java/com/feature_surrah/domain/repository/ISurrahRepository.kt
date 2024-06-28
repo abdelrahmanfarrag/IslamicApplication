@@ -5,5 +5,5 @@ import com.islamic.domain.ResultState
 import kotlinx.coroutines.flow.Flow
 
 interface ISurrahRepository {
-    suspend fun getSurrah(number: Int, selections: ArrayList<String>):Flow<ResultState<out Surrah?>>
+    suspend fun getSurrah(number: Int, selections: ArrayList<String>):Flow<ResultState<Surrah>>
 }

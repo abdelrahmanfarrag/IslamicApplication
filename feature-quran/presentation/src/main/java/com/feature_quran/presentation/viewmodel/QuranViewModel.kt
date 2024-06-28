@@ -39,7 +39,8 @@ class QuranViewModel @Inject constructor(
                 sendSingleUIEvent {
                     QuranContract.QuranUIEvents.NavigateToSurrahPage(
                         audioId = currentState.sheikhId,
-                        tafsirId = currentState.tafsirId
+                        tafsirId = currentState.tafsirId,
+                        number = currentState.surrahNumber
                     )
                 }
             }
@@ -104,7 +105,7 @@ class QuranViewModel @Inject constructor(
                 isLoading = true
             )
         }
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             iLoadQuranInitialDataUseCase().collect { result ->
                 if (result is ResultState.ResultSuccess) {
                     setState {

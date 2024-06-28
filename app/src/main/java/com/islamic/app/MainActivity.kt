@@ -46,6 +46,7 @@ import androidx.navigation.toRoute
 import com.feature_quran.presentation.component.QuranScreen
 import com.feature_quran.presentation.viewmodel.QuranContract
 import com.feature_quran.presentation.viewmodel.QuranViewModel
+import com.feature_surrah.presentation.viewmodel.SurrahViewModel
 import com.islamic.app.bottomnavigation.BottomNavigationItems
 import com.islamic.app.navigation.Screens
 import com.islamic.app.ui.theme.IslamicApplicationTheme
@@ -210,6 +211,7 @@ class MainActivity : ComponentActivity() {
                                         is QuranContract.QuranUIEvents.NavigateToSurrahPage -> {
                                             navHostController.navigate(
                                                 Screens.SurrahScreen(
+                                                    uiEvents.number?:0,
                                                     uiEvents.audioId,
                                                     uiEvents.tafsirId
                                                 )
@@ -227,8 +229,9 @@ class MainActivity : ComponentActivity() {
                             Text(text = "Radio")
                         }
                         composable<Screens.SurrahScreen> {
-                            val args = it.toRoute<Screens.SurrahScreen>()
-                            Text(text = "Navigate to data $args")
+                            val surrahViewModel = hiltViewModel<SurrahViewModel>()
+                            val state = surrahViewModel.state.collectAsStateWithLifecycle().value
+                            Log.d("printState", "$state")
                         }
 
                     }

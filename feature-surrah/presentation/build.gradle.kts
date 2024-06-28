@@ -14,6 +14,5 @@ dependencies {
     implementation(project(Module.FEATURE_SURRAH_DOMAIN))
     implementation(project(Module.CORE_DOMAIN))
     implementation(project(Module.CORE_PRESENTATION))
-    implementation("androidx.compose.material3:material3-android:1.2.1")
     coreLibraryDesugaring(Desugar.desugarJDKLibs)
 }

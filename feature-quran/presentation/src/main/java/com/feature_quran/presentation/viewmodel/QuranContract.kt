@@ -31,7 +31,8 @@ class QuranContract {
     sealed class QuranUIEvents : SingleUIEvent {
         data class NavigateToSurrahPage(
             val tafsirId: String?,
-            val audioId: String?
+            val audioId: String?,
+            val number:Int?
         ) : QuranUIEvents()
     }
 }

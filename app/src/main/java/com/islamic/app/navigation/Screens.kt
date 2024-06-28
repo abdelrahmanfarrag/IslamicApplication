@@ -18,6 +18,7 @@ object Screens {
 
     @Serializable
     data class SurrahScreen(
+        val number: Int = 0,
         val audioId: String? = null,
         val tafsirId: String? = null
     )
