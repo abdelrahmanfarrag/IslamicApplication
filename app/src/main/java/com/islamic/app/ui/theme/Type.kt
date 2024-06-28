@@ -16,11 +16,21 @@ val cairoFamily = FontFamily(
     Font(R.font.cairo_bold, FontWeight.W500)
 )
 
+val amiriFamily = FontFamily(
+    Font((R.font.amiri_regular), FontWeight.Normal),
+    Font((R.font.amiri_bold), FontWeight.Bold)
+)
+
 // Set of Material typography styles to start with
 val Typography = Typography(
     body1 = TextStyle(
         fontFamily = cairoFamily,
         fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    ),
+    body2 = TextStyle(
+        fontFamily = amiriFamily,
+        fontWeight = FontWeight.Bold,
         fontSize = 16.sp
     ),
     button = TextStyle(
@@ -58,9 +68,19 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp
     ),
-    subtitle1 =TextStyle(
+    h6 = TextStyle(
+        fontFamily = amiriFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 12.sp
+    ),
+    subtitle1 = TextStyle(
         fontFamily = cairoFamily,
         fontWeight = FontWeight.Light,
         fontSize = 10.sp
-    )
+    ),
+    subtitle2 = TextStyle(
+        fontFamily = amiriFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp
+    ),
 )

@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -26,6 +25,7 @@ import androidx.compose.material.SnackbarResult.*
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -33,19 +33,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.feature_quran.presentation.component.QuranScreen
 import com.feature_quran.presentation.viewmodel.QuranContract
 import com.feature_quran.presentation.viewmodel.QuranViewModel
+import com.feature_surrah.presentation.components.Surrah
 import com.feature_surrah.presentation.viewmodel.SurrahViewModel
 import com.islamic.app.bottomnavigation.BottomNavigationItems
 import com.islamic.app.navigation.Screens
@@ -211,7 +213,7 @@ class MainActivity : ComponentActivity() {
                                         is QuranContract.QuranUIEvents.NavigateToSurrahPage -> {
                                             navHostController.navigate(
                                                 Screens.SurrahScreen(
-                                                    uiEvents.number?:0,
+                                                    uiEvents.number ?: 0,
                                                     uiEvents.audioId,
                                                     uiEvents.tafsirId
                                                 )
@@ -231,9 +233,30 @@ class MainActivity : ComponentActivity() {
                         composable<Screens.SurrahScreen> {
                             val surrahViewModel = hiltViewModel<SurrahViewModel>()
                             val state = surrahViewModel.state.collectAsStateWithLifecycle().value
-                            Log.d("printState", "$state")
-                        }
+                            val lifeCycle = LocalLifecycleOwner.current
 
+                            DisposableEffect(lifeCycle) {
+                                val lifecycleObserver = LifecycleEventObserver { _, event ->
+                                    when (event) {
+//                                        Lifecycle.Event.ON_START -> state.exoPlayer?.play()
+//                                        Lifecycle.Event.ON_PAUSE -> state.exoPlayer?.pause()
+//                                        Lifecycle.Event.ON_STOP -> state.exoPlayer?.pause()
+//                                        Lifecycle.Event.ON_DESTROY -> state.exoPlayer?.pause()
+                                        else -> {}
+                                    }
+                                }
+                                lifeCycle.lifecycle.addObserver(lifecycleObserver)
+                                onDispose {
+                                }
+                            }
+
+                            Surrah(
+                                surrahState = state,
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+                                surrahViewModel.sendEvent(it)
+                            }
+                        }
                     }
                 }
             }

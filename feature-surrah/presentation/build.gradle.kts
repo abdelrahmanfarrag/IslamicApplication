@@ -15,4 +15,7 @@ dependencies {
     implementation(project(Module.CORE_DOMAIN))
     implementation(project(Module.CORE_PRESENTATION))
     coreLibraryDesugaring(Desugar.desugarJDKLibs)
+    implementation(ExoPlayer.EXO_PLAYER_UI)
+ //   implementation(ExoPlayer.EXO_PLAYER_COMMON)
+    implementation(ExoPlayer.EXO_PLAYER_MEDIA)
 }

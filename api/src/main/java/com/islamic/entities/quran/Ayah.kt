@@ -3,7 +3,7 @@ package com.islamic.entities.quran
 import com.google.gson.annotations.SerializedName
 
 data class Ayah(
-    @SerializedName("number")
+    @SerializedName("numberInSurah")
     val number: Int?,
     @SerializedName("text")
     val text: String?,

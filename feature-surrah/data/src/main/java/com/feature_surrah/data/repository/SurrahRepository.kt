@@ -22,7 +22,7 @@ class SurrahRepository @Inject constructor(
         selections: ArrayList<String>
     ): Flow<ResultState<Surrah>> {
         val selectionPath = createSelectionsPath(selections)
-        val result = iQuranRemoteDataSource.getQuranData(1, selectionPath).mapToResultState {
+        val result = iQuranRemoteDataSource.getQuranData(number, selectionPath).mapToResultState {
             return@mapToResultState it?.data?.mapToSurrah()
         }
         val surrahFlow = flow { emit(result) }

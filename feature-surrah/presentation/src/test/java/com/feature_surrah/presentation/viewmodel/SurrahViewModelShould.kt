@@ -26,6 +26,7 @@ class SurrahViewModelShould {
     private lateinit var surrahViewModel: SurrahViewModel
     private val iGetSurrahUseCase = mock<IGetSurrahUseCase>()
     private val mSavedStatHandle = mock<SavedStateHandle>()
+    private val fakeExoPlayer = FakeExoPlayer()
 
     @Before
     fun setup() {
@@ -47,7 +48,7 @@ class SurrahViewModelShould {
         ).thenReturn(flow {
             emit(resultState)
         })
-        surrahViewModel = SurrahViewModel(iGetSurrahUseCase, mSavedStatHandle)
+        surrahViewModel = SurrahViewModel(iGetSurrahUseCase, mSavedStatHandle,fakeExoPlayer)
     }
 
     @Test
