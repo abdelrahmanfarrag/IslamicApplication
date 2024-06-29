@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_internet">لا يوجد إتصال بالانترنت</string>
+    <string name="something_went_wrong">حدث خطأ ما</string>
+    <string name="no_location_found">لم يتم تحديد موقعك</string>
+    <string name="permission_not_granted">احقية الوصول الي موقعك لم يتم الموافقة عليها</string>
+    <string name="fajr">الفجر</string>
+    <string name="shrouk">الشروق</string>
+    <string name="dhuhr">الضهر</string>
+    <string name="asr">العصر</string>
+    <string name="maghreb">المغرب</string>
+    <string name="isha">العشاء</string>
+    <string name="notification_channel_id">islamic_app</string>
+    <string name="pray_times">مواقيت الصلاة</string>
+    <string name="pray_times_updates">إنه يوم جديد . اتطلع علي مواعيد الصلاة لليوم الجديد</string>
+    <string name="home">الرئيسية</string>
+    <string name="quran">القرأن</string>
+    <string name="dismiss">إغلاق</string>
+    <string name="radio">الراديو</string>
+    <string name="txt_continue">مُتابعة</string>
+</resources>

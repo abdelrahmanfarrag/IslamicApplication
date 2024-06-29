@@ -54,12 +54,15 @@ class SurrahViewModel @Inject constructor(
     }
 
 
-    private fun updatePlayingList(ayahNumber: Int?, isToPlay: Boolean = false): ArrayList<Ayah> {
+    private fun updatePlayingList(
+        ayahNumber: Int?,
+        ayahPlayingState: Ayah.AyahPlayingState
+    ): ArrayList<Ayah> {
         val updateItems = currentState.surrah?.ayahs?.map {
             return@map if (it.ayahNumber == ayahNumber)
-                it.copy(isAudioPlaying = isToPlay)
+                it.copy(ayahPlayingAudioState = ayahPlayingState)
             else
-                it.copy(isAudioPlaying = false)
+                it.copy(ayahPlayingAudioState = Ayah.AyahPlayingState.IDLE)
         } as ArrayList
         return updateItems
     }
@@ -73,9 +76,9 @@ class SurrahViewModel @Inject constructor(
             setState {
                 copy(
                     playingAyahNumber = ayahNumber,
-                    surrah = currentState.surrah?.copy(
-                        ayahs = updatePlayingList(ayahNumber, true)
-                    )
+//                    surrah = currentState.surrah?.copy(
+//                        ayahs = updatePlayingList(ayahNumber, true)
+//                    )
                 )
             }
         }
@@ -87,14 +90,45 @@ class SurrahViewModel @Inject constructor(
             it.addListener(object : Player.Listener {
                 override fun onPlaybackStateChanged(playbackState: Int) {
                     super.onPlaybackStateChanged(playbackState)
-                   if (playbackState == Player.STATE_ENDED) {
-                        setState {
-                            copy(
-                                surrah = currentState.surrah?.copy(
-                                    ayahs = updatePlayingList(currentState.playingAyahNumber, false)
-                                ),
-                                playingAyahNumber = null
-                            )
+                    when (playbackState) {
+                        Player.STATE_ENDED -> {
+                            setState {
+                                copy(
+                                    surrah = currentState.surrah?.copy(
+                                        ayahs = updatePlayingList(currentState.playingAyahNumber, Ayah.AyahPlayingState.ENDED)
+                                    ),
+                                    playingAyahNumber = null
+                                )
+                            }
+                        }
+                        Player.STATE_BUFFERING -> {
+                            setState {
+                                copy(
+                                    surrah = currentState.surrah?.copy(
+                                        ayahs = updatePlayingList(currentState.playingAyahNumber, Ayah.AyahPlayingState.BUFFERING)
+                                    ),
+                                    //       playingAyahNumber = null
+                                )
+                            }
+                        }
+                        Player.STATE_READY -> {
+                            setState {
+                                copy(
+                                    surrah = currentState.surrah?.copy(
+                                        ayahs = updatePlayingList(currentState.playingAyahNumber, Ayah.AyahPlayingState.PLAYING)
+                                    ),
+                                )
+                            }
+                        }
+
+                        Player.STATE_IDLE -> {
+                            setState {
+                                copy(
+                                    surrah = currentState.surrah?.copy(
+                                        ayahs = updatePlayingList(currentState.playingAyahNumber, Ayah.AyahPlayingState.IDLE)
+                                    ),
+                                )
+                            }
                         }
                     }
                 }

@@ -10,6 +10,11 @@ android {
     namespace = "com.islamic.app"
     compileSdk = 34
 
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
     defaultConfig {
         applicationId = ProjectConfig.appId
         minSdk = ProjectConfig.minSdk
@@ -74,6 +79,7 @@ dependencies {
         exclude(group = "com.squareup", module = "javapoet")
     }
     implementation("com.squareup:javapoet:1.13.0")
+    implementation(project(":local"))
     kapt(Hilt.hiltCompiler)
     kapt("androidx.hilt:hilt-compiler:1.2.0")
     implementation(project(Module.api))

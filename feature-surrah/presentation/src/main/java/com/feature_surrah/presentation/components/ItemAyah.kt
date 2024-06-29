@@ -5,14 +5,17 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -79,47 +82,61 @@ fun ItemAyah(
             style = MaterialTheme.typography.h5,
             textAlign = TextAlign.Center
         )
-        AnimatedContent(targetState = ayah?.isAudioPlaying, label = "") {
-            if (it == true)
-                AudioRunningDisplay(
+        AnimatedContent(targetState = ayah?.ayahPlayingAudioState, label = "") {
+            when (it) {
+                Ayah.AyahPlayingState.PLAYING -> AudioRunningDisplay(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(DarkGreen)
                         .height(70.dp),
                     powersRatio
                 )
-            else {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp)
-                        .background(color = DarkGreen),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Icon(
+
+                Ayah.AyahPlayingState.BUFFERING -> {
+                    Box(
                         modifier = Modifier
-                            .padding(8.dp)
-                            .clickable {
-                                onEvent.invoke(
-                                    SurrahContract.SurrahEvents.OnPlayClick(
-                                        ayah?.ayahAudioURL,
-                                        ayah?.ayahNumber
+                            .fillMaxWidth()
+                            .wrapContentHeight(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(modifier = Modifier
+                            .size(48.dp)
+                            .padding(8.dp))
+                    }
+                }
+
+                else -> {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp)
+                            .background(color = DarkGreen),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Icon(
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .clickable {
+                                    onEvent.invoke(
+                                        SurrahContract.SurrahEvents.OnPlayClick(
+                                            ayah?.ayahAudioURL,
+                                            ayah?.ayahNumber
+                                        )
                                     )
-                                )
-                            },
-                        imageVector = Icons.Default.PlayArrow,
-                        contentDescription = "",
-                        tint = Color.White
-                    )
-                    Icon(
-                        modifier = Modifier.padding(8.dp),
-                        imageVector = Icons.Default.Share,
-                        contentDescription = "",
-                        tint = Color.White
-                    )
+                                },
+                            imageVector = Icons.Default.PlayArrow,
+                            contentDescription = "",
+                            tint = Color.White
+                        )
+                        Icon(
+                            modifier = Modifier.padding(8.dp),
+                            imageVector = Icons.Default.Share,
+                            contentDescription = "",
+                            tint = Color.White
+                        )
+                    }
                 }
             }
         }
     }
-
 }

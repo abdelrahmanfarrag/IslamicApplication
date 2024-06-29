@@ -5,5 +5,12 @@ data class Ayah(
     val ayahTafsirText: String? = "",
     val ayahAudioURL: String? = "",
     val ayah: String? = "",
-    val isAudioPlaying: Boolean = false
-)
+    val ayahPlayingAudioState: AyahPlayingState = AyahPlayingState.IDLE
+) {
+    enum class AyahPlayingState {
+        ENDED,
+        BUFFERING,
+        PLAYING,
+        IDLE
+    }
+}

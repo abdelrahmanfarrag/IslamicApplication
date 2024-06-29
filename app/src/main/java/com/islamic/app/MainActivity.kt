@@ -62,6 +62,7 @@ import com.islamic.presentation.content.HomeComposable
 import com.islamic.services.alarmpraytime.IAlarmPrayTime
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -78,7 +79,6 @@ class MainActivity : ComponentActivity() {
         bottomBarItems: ArrayList<BottomNavigationItems> = arrayListOf(),
         onEvent: (MainEvents) -> Unit = {}
     ) {
-
         LaunchedEffect(key1 = Unit) {
             singleEvents.collect { event ->
                 when (event) {
@@ -138,10 +138,13 @@ class MainActivity : ComponentActivity() {
             IslamicApplicationTheme {
                 val scaffoldState = rememberScaffoldState()
                 val navHostController = rememberNavController()
-
                 val currentDestinationState by navHostController.currentBackStackEntryAsState()
                 LaunchedEffect(key1 = currentDestinationState) {
-                    mainViewModel.sendEvent(MainEvents.ShouldShowBottomNavigation(navHostController.currentDestination?.route))
+                    mainViewModel.sendEvent(
+                        MainEvents.ShouldShowBottomNavigation(
+                            navHostController.currentDestination?.route
+                        )
+                    )
                 }
                 Scaffold(scaffoldState = scaffoldState, bottomBar = {
                     BottomNavigationSetup(
@@ -232,13 +235,14 @@ class MainActivity : ComponentActivity() {
                         }
                         composable<Screens.SurrahScreen> {
                             val surrahViewModel = hiltViewModel<SurrahViewModel>()
-                            val state = surrahViewModel.state.collectAsStateWithLifecycle().value
+                            val state =
+                                surrahViewModel.state.collectAsStateWithLifecycle().value
                             val lifeCycle = LocalLifecycleOwner.current
 
                             DisposableEffect(lifeCycle) {
                                 val lifecycleObserver = LifecycleEventObserver { _, event ->
                                     when (event) {
-//                                        Lifecycle.Event.ON_START -> state.exoPlayer?.play()
+                                    //    Lifecycle.Event.ON_START -> state.exoPlayer?.play()
 //                                        Lifecycle.Event.ON_PAUSE -> state.exoPlayer?.pause()
 //                                        Lifecycle.Event.ON_STOP -> state.exoPlayer?.pause()
 //                                        Lifecycle.Event.ON_DESTROY -> state.exoPlayer?.pause()
@@ -261,6 +265,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
     }
 
     private fun launchSettingsForApplication() {

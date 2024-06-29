@@ -9,6 +9,7 @@
     <application
         android:name=".IslamicApplication"
         android:allowBackup="true"
+        android:localeConfig="@xml/language"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -16,9 +17,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IslamicApplication"
-        tools:targetApi="31">
+        tools:targetApi="tiramisu">
         <receiver android:name="com.islamic.services.AlarmPrayReceiver" />
 
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
