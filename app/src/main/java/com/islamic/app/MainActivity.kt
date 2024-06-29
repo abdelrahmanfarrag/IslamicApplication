@@ -253,7 +253,7 @@ class MainActivity : ComponentActivity() {
 
                             Surrah(
                                 surrahState = state,
-                                modifier = Modifier.padding(16.dp)
+                                modifier = Modifier
                             ) {
                                 surrahViewModel.sendEvent(it)
                             }
