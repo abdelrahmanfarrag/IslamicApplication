@@ -1,5 +1,7 @@
 package com.feature_surrah.presentation.viewmodel
 
+import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
@@ -8,6 +10,7 @@ import com.feature_surrah.domain.models.Ayah
 import com.feature_surrah.domain.usecase.IGetSurrahUseCase
 import com.feature_surrah.presentation.exoplayer.ICreateExoPlayer
 import com.islamic.domain.ResultState
+import com.islamic.domain.extension.replaceEnglishNumberWithArabic
 import com.islamic.presentation.base.viewmodel.BaseViewModel
 import com.islamic.presentation.base.viewmodel.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +19,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.random.Random
+
 
 @HiltViewModel
 class SurrahViewModel @Inject constructor(
@@ -48,9 +52,42 @@ class SurrahViewModel @Inject constructor(
                 event.ayahNumber
             )
 
+            is SurrahContract.SurrahEvents.OnShareClick -> onShareSurrahClick(
+                event.context,
+                event.ayah,
+                event.tafsir,
+                event.number
+            )
+
             SurrahContract.SurrahEvents.PageOpened -> onPageOpened()
             SurrahContract.SurrahEvents.GetSurrah -> getSurrah()
         }
+    }
+
+    private fun onShareSurrahClick(
+        context: Context,
+        ayah: String?,
+        tafsir: String?,
+        number: String?
+    ) {
+        val message = context.getString(
+            com.islamic.core_domain.R.string.share_tafsir_text,
+            ayah,
+            number.replaceEnglishNumberWithArabic(),
+            currentState.surrah?.surrahName,
+            currentState.tafsirName,
+            tafsir
+        )
+        val share = Intent(Intent.ACTION_SEND)
+        share.setType("text/plain")
+        share.putExtra(Intent.EXTRA_TEXT, message)
+        context.startActivity(
+            Intent.createChooser(
+                share,
+                "Test"
+            )
+        )
+
     }
 
 
@@ -75,10 +112,7 @@ class SurrahViewModel @Inject constructor(
             currentState.exoPlayer?.play()
             setState {
                 copy(
-                    playingAyahNumber = ayahNumber,
-//                    surrah = currentState.surrah?.copy(
-//                        ayahs = updatePlayingList(ayahNumber, true)
-//                    )
+                    playingAyahNumber = ayahNumber
                 )
             }
         }
@@ -95,27 +129,37 @@ class SurrahViewModel @Inject constructor(
                             setState {
                                 copy(
                                     surrah = currentState.surrah?.copy(
-                                        ayahs = updatePlayingList(currentState.playingAyahNumber, Ayah.AyahPlayingState.ENDED)
+                                        ayahs = updatePlayingList(
+                                            currentState.playingAyahNumber,
+                                            Ayah.AyahPlayingState.ENDED
+                                        )
                                     ),
                                     playingAyahNumber = null
                                 )
                             }
                         }
+
                         Player.STATE_BUFFERING -> {
                             setState {
                                 copy(
                                     surrah = currentState.surrah?.copy(
-                                        ayahs = updatePlayingList(currentState.playingAyahNumber, Ayah.AyahPlayingState.BUFFERING)
+                                        ayahs = updatePlayingList(
+                                            currentState.playingAyahNumber,
+                                            Ayah.AyahPlayingState.BUFFERING
+                                        )
                                     ),
-                                    //       playingAyahNumber = null
                                 )
                             }
                         }
+
                         Player.STATE_READY -> {
                             setState {
                                 copy(
                                     surrah = currentState.surrah?.copy(
-                                        ayahs = updatePlayingList(currentState.playingAyahNumber, Ayah.AyahPlayingState.PLAYING)
+                                        ayahs = updatePlayingList(
+                                            currentState.playingAyahNumber,
+                                            Ayah.AyahPlayingState.PLAYING
+                                        )
                                     ),
                                 )
                             }
@@ -125,16 +169,15 @@ class SurrahViewModel @Inject constructor(
                             setState {
                                 copy(
                                     surrah = currentState.surrah?.copy(
-                                        ayahs = updatePlayingList(currentState.playingAyahNumber, Ayah.AyahPlayingState.IDLE)
+                                        ayahs = updatePlayingList(
+                                            currentState.playingAyahNumber,
+                                            Ayah.AyahPlayingState.IDLE
+                                        )
                                     ),
                                 )
                             }
                         }
                     }
-                }
-
-                override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
-                    super.onPlayWhenReadyChanged(playWhenReady, reason)
                 }
             })
         }
@@ -171,13 +214,15 @@ class SurrahViewModel @Inject constructor(
         val surrahNumber = mSavedStateHandle.get<Int>("number") ?: -1
         val audioId = mSavedStateHandle.get<String>("audioId") ?: ""
         val tafsirId = mSavedStateHandle.get<String>("tafsirId") ?: ""
+        val tafsirName = mSavedStateHandle.get<String>("tafsirName") ?: ""
         setState {
             copy(
                 surrahNumber = surrahNumber,
                 audioId = audioId,
                 tafsirId = tafsirId,
                 isLoading = true,
-                exoPlayer = iCreateExoPlayer.createExoPlayer()
+                exoPlayer = iCreateExoPlayer.createExoPlayer(),
+                tafsirName = tafsirName
             )
         }
         initPlayer()

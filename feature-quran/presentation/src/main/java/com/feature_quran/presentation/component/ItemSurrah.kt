@@ -44,7 +44,7 @@ fun ItemSurrah(
             )
             .clipToBounds()
             .clickable {
-                onSurrahChose.invoke(QuranContract.QuranEvents.OnSurrahChose(singleSurrah.number))
+                onSurrahChose.invoke(QuranContract.QuranEvents.OnSurrahChose(singleSurrah.number,singleSurrah.name))
             }, horizontalArrangement = Arrangement.SpaceBetween
     ) {
 

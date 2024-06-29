@@ -6,13 +6,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateIntAsState
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,7 +35,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -62,7 +61,6 @@ import com.islamic.presentation.content.HomeComposable
 import com.islamic.services.alarmpraytime.IAlarmPrayTime
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
-import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -79,13 +77,15 @@ class MainActivity : ComponentActivity() {
         bottomBarItems: ArrayList<BottomNavigationItems> = arrayListOf(),
         onEvent: (MainEvents) -> Unit = {}
     ) {
+        val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
         LaunchedEffect(key1 = Unit) {
             singleEvents.collect { event ->
                 when (event) {
                     is MainSingleUIEvent.OnRouteChange -> navHostController.navigate(
                         event.route
                     ) {
-                        popUpTo(navHostController.graph.startDestinationId)
+                        navHostController.popBackStack()
                         launchSingleTop = true
                     }
                 }
@@ -93,13 +93,9 @@ class MainActivity : ComponentActivity() {
         }
         AnimatedVisibility(visible = state.shouldShow) {
             BottomNavigation(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .padding(PaddingValues(16.dp))
-                    .clip(RoundedCornerShape(8.dp))
+                modifier = Modifier.clip(RoundedCornerShape(topEnd = 8.dp, topStart = 8.dp))
             ) {
-                val navBackStackEntry by navHostController.currentBackStackEntryAsState()
-                val currentRoute = navBackStackEntry?.destination?.route
+                Log.d("printRoute", "$currentRoute")
                 val context = LocalContext.current
                 bottomBarItems.forEach { item ->
                     val size = animateIntAsState(
@@ -218,7 +214,8 @@ class MainActivity : ComponentActivity() {
                                                 Screens.SurrahScreen(
                                                     uiEvents.number ?: 0,
                                                     uiEvents.audioId,
-                                                    uiEvents.tafsirId
+                                                    uiEvents.tafsirId,
+                                                    uiEvents.tafsirName
                                                 )
                                             )
                                         }
@@ -242,7 +239,7 @@ class MainActivity : ComponentActivity() {
                             DisposableEffect(lifeCycle) {
                                 val lifecycleObserver = LifecycleEventObserver { _, event ->
                                     when (event) {
-                                    //    Lifecycle.Event.ON_START -> state.exoPlayer?.play()
+                                        //    Lifecycle.Event.ON_START -> state.exoPlayer?.play()
 //                                        Lifecycle.Event.ON_PAUSE -> state.exoPlayer?.pause()
 //                                        Lifecycle.Event.ON_STOP -> state.exoPlayer?.pause()
 //                                        Lifecycle.Event.ON_DESTROY -> state.exoPlayer?.pause()

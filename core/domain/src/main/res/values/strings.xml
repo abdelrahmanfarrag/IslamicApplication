@@ -18,4 +18,9 @@
     <string name="dismiss">Dismiss</string>
     <string name="radio">Radio</string>
     <string name="txt_continue">Continue</string>
+    <string name="share_tafsir_text">Tafsir ayah %s number %s in %s according to %s is %s</string>
+    <string name="sheikh">Sheikh</string>
+    <string name="tafsir">Tafsir</string>
+    <string name="ayah_count">Ayah count</string>
+    <string name="ayah_number">Number</string>
 </resources>

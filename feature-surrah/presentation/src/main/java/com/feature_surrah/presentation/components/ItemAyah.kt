@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.util.UnstableApi
@@ -42,6 +43,7 @@ fun ItemAyah(
     powersRatio: List<Float> = arrayListOf(),
     onEvent: (SurrahContract.SurrahEvents) -> Unit = {}
 ) {
+    val context = LocalContext.current
     Column(
         modifier = modifier
     ) {
@@ -54,6 +56,12 @@ fun ItemAyah(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
+            Text(
+                modifier = Modifier.align(Alignment.CenterVertically),
+                text = ayah?.ayah.toString(),
+                style = MaterialTheme.typography.h6,
+                color = Color.White
+            )
             TextWithIcon(
                 modifier = Modifier
                     .wrapContentSize()
@@ -64,13 +72,6 @@ fun ItemAyah(
                 iconTint = Color.White,
                 icon = com.islamic.core_domain.R.drawable.ic_verse,
                 iconSize = 48
-            )
-
-            Text(
-                modifier = Modifier.align(Alignment.CenterVertically),
-                text = ayah?.ayah.toString(),
-                style = MaterialTheme.typography.h6,
-                color = Color.White
             )
 
         }
@@ -99,9 +100,11 @@ fun ItemAyah(
                             .wrapContentHeight(),
                         contentAlignment = Alignment.Center
                     ) {
-                        CircularProgressIndicator(modifier = Modifier
-                            .size(48.dp)
-                            .padding(8.dp))
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .padding(8.dp)
+                        )
                     }
                 }
 
@@ -129,7 +132,18 @@ fun ItemAyah(
                             tint = Color.White
                         )
                         Icon(
-                            modifier = Modifier.padding(8.dp),
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .clickable {
+                                    onEvent.invoke(
+                                        SurrahContract.SurrahEvents.OnShareClick(
+                                            context,
+                                            ayah?.ayah,
+                                            ayah?.ayahTafsirText,
+                                            ayah?.ayahNumber.toString()
+                                        )
+                                    )
+                                },
                             imageVector = Icons.Default.Share,
                             contentDescription = "",
                             tint = Color.White

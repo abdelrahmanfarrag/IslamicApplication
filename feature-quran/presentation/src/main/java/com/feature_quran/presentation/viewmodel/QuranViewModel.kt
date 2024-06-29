@@ -25,8 +25,16 @@ class QuranViewModel @Inject constructor(
 
     override fun onEvent(event: Event) {
         when (event) {
-            is QuranContract.QuranEvents.OnSurrahChose -> onSurrahChose(event.surrahNumber)
-            is QuranContract.QuranEvents.OnTafsirSelected -> onTafsirSelect(event.tafsirId)
+            is QuranContract.QuranEvents.OnSurrahChose -> onSurrahChose(
+                event.surrahNumber,
+                event.name
+            )
+
+            is QuranContract.QuranEvents.OnTafsirSelected -> onTafsirSelect(
+                event.tafsirId,
+                event.tafsirName
+            )
+
             is QuranContract.QuranEvents.OnAudioSelected -> onAudioSelected(event.audioId)
             is QuranContract.QuranEvents.ChangeBottomSheetState -> setState {
                 copy(
@@ -40,7 +48,8 @@ class QuranViewModel @Inject constructor(
                     QuranContract.QuranUIEvents.NavigateToSurrahPage(
                         audioId = currentState.sheikhId,
                         tafsirId = currentState.tafsirId,
-                        number = currentState.surrahNumber
+                        number = currentState.surrahNumber,
+                        tafsirName = currentState.tafsirName
                     )
                 }
             }
@@ -67,7 +76,7 @@ class QuranViewModel @Inject constructor(
 
     }
 
-    private fun onTafsirSelect(tafsirId: String?) {
+    private fun onTafsirSelect(tafsirId: String?, tafsirName: String?) {
         tafsirId?.let { id ->
             val updateTafsir = currentState.quranDto?.quranTafsir?.map {
                 return@map it.copy(
@@ -80,19 +89,21 @@ class QuranViewModel @Inject constructor(
                     quranDto = currentState.quranDto?.copy(
                         quranTafsir = updateTafsir
                     ),
-                    tafsirId = tafsirId
+                    tafsirId = tafsirId,
+                    tafsirName = tafsirName
                 )
             }
         }
 
     }
 
-    private fun onSurrahChose(surrahNumber: Int?) {
+    private fun onSurrahChose(surrahNumber: Int?, name: String?) {
         if (surrahNumber != null) {
             setState {
                 copy(
                     surrahNumber = surrahNumber,
-                    shouldShowModalBottomSheet = true
+                    shouldShowModalBottomSheet = true,
+                    name = name
                 )
             }
 

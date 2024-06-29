@@ -1,5 +1,6 @@
 package com.feature_surrah.presentation.viewmodel
 
+import android.content.Context
 import androidx.media3.exoplayer.ExoPlayer
 import com.feature_surrah.domain.models.Surrah
 import com.islamic.domain.TextWrapper
@@ -17,13 +18,15 @@ class SurrahContract {
         val errorText: TextWrapper? = null,
         val powerRatio: List<Float> = arrayListOf(),
         val exoPlayer: ExoPlayer? = null,
-        val playingAyahNumber: Int? = -1
+        val playingAyahNumber: Int? = -1,
+        val tafsirName:String? = ""
     ) : State
 
     sealed class SurrahEvents : Event {
         data object PageOpened : SurrahEvents()
         data object GetSurrah : SurrahEvents()
 
+        data class OnShareClick(val context:Context,val ayah:String?,val tafsir:String?,val number:String?):SurrahEvents()
         data class OnPlayClick(val mediaURL: String?, val ayahNumber: Int?) : SurrahEvents()
     }
 

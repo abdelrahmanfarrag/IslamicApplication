@@ -18,4 +18,11 @@
     <string name="dismiss">إغلاق</string>
     <string name="radio">الراديو</string>
     <string name="txt_continue">مُتابعة</string>
+    <string name="share_tafsir_text">تفسير %s \n الأية رقم %s في  %s\n حسب  %s\n  %s</string>
+    <string name="sheikh">الشيخ</string>
+    <string name="tafsir">التفسير</string>
+    <string name="ayah_count">عدد اياتها</string>
+    <string name="ayah_number">ترتيبها</string>
+
+
 </resources>

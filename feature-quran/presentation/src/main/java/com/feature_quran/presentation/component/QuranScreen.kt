@@ -29,6 +29,7 @@ fun QuranScreen(
         shouldShowModalBottomSheet = state.shouldShowModalBottomSheet,
         quranSheikhAudio = state.quranDto?.quranSheikhAudios ?: arrayListOf(),
         quranTafsir = state.quranDto?.quranTafsir ?: arrayListOf(),
+        surrahName = state.name,
         modalBottomSheetState = modalBottomSheetState
     ) {
         onEvent.invoke(it)

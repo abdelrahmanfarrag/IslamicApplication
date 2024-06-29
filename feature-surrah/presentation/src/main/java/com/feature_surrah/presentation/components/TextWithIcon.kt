@@ -34,12 +34,6 @@ fun TextWithIcon(
 //            .padding(start = 8.dp)
 //            .align(Alignment.CenterVertically)
     ) {
-        Icon(
-            painter = painterResource(id = icon),
-            contentDescription = "",
-            modifier = Modifier.size(iconSize.dp),
-            tint = iconTint
-        )
         Text(
 
             text = text.toString(),
@@ -50,6 +44,13 @@ fun TextWithIcon(
             style = textStyle,
 
             )
+        Icon(
+            painter = painterResource(id = icon),
+            contentDescription = "",
+            modifier = Modifier.size(iconSize.dp),
+            tint = iconTint
+        )
+
 
     }
 }
